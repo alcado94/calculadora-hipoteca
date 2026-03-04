@@ -9,6 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   integrations: [react()],
   output: 'static',
+  site: 'https://alcado94.github.io',
   base: '/calculadora-hipoteca/',
   vite: {
     plugins: [tailwindcss()],
