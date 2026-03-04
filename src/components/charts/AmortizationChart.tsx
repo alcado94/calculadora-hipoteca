@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line, ComposedChart } from 'recharts';
 import { Card } from '../ui';
 import { formatCurrency } from '../../utils';
@@ -22,6 +22,7 @@ export function AmortizationChart({ data, className }: { data: any[], className?
   const nominalPaymentStroke = isDark ? '#cbd5e1' : '#94a3b8';
 
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
     const check = () => setIsMobile(window.innerWidth < 640);
     check();
     window.addEventListener('resize', check);

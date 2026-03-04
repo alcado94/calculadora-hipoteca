@@ -1,9 +1,175 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import App from '../components/App';
+import { MORTGAGE_DEFAULTS } from '../utils';
 import '../styles/global.css';
+
+// Pre-calculated defaults for SSG HTML (avoids empty flash on LCP)
+const d = MORTGAGE_DEFAULTS;
 ---
 
 <Layout>
-  <App client:load />
+  <!--
+    SSG Shell: HTML estático visible inmediatamente (LCP sin esperar React).
+    App.tsx hidrata sobre este HTML y lo reemplaza cuando React monta.
+    El atributo data-ssr-shell permite que App.tsx lo oculte al hidratar.
+  -->
+  <div id="ssr-shell" data-ssr-shell>
+    <div class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col font-sans">
+      <!-- Header -->
+      <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+          <div class="flex items-center gap-3">
+            <div class="bg-indigo-600 dark:bg-indigo-500 p-2">
+              <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="m8 14 2 2 4-4"/>
+              </svg>
+            </div>
+            <h1 class="text-xl font-semibold tracking-tight">Simulador de hipoteca</h1>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main form shell -->
+      <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <div class="w-full max-w-2xl">
+          <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Calcula tu hipoteca</h2>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8 space-y-8">
+            <!-- Sección 1: Datos del inmueble -->
+            <div>
+              <h3 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">Datos del Inmueble</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- Precio del Inmueble -->
+                <div class="sm:col-span-2 flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Precio del Inmueble</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" value={d.propertyValue} step="1000" min="0"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="Precio del Inmueble" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">€</span>
+                  </div>
+                </div>
+                <!-- LTV -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Porcentaje de Financiación (LTV)</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" value={d.ltv} step="1" min="0" max="100"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="LTV" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">%</span>
+                  </div>
+                </div>
+                <!-- Plazo -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Plazo</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" value={d.years} step="1" min="1" max="40"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="Plazo en años" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">años</span>
+                  </div>
+                </div>
+                <!-- Tipo de hipoteca -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Tipo de Hipoteca</label>
+                  <select class="px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none" aria-label="Tipo de hipoteca">
+                    <option value="fixed" selected={d.mortgageType === 'fixed'}>Fija</option>
+                    <option value="variable" selected={d.mortgageType === 'variable'}>Variable</option>
+                  </select>
+                </div>
+                <!-- Tipo de interés -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Tipo de Interés Fijo</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" value={d.interestRate} step="0.1" min="0"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="Tipo de interés" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-t border-slate-100 dark:border-slate-800"></div>
+
+            <!-- Sección 2: Perfil financiero -->
+            <div>
+              <h3 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">Perfil Financiero</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- Ahorro Actual -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Ahorro Actual</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" placeholder="0" step="1000" min="0"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="Ahorro actual" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">€</span>
+                  </div>
+                </div>
+                <!-- Ingresos -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Ingresos Netos Mensuales</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" placeholder="0" step="100" min="0"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="Ingresos netos mensuales" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">€</span>
+                  </div>
+                </div>
+                <!-- Ahorro mensual -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-medium text-slate-600 dark:text-slate-400">Ahorro Mensual</label>
+                  <div class="flex items-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <input type="number" placeholder="0" step="50" min="0"
+                      class="flex-1 px-3 py-2 text-sm bg-transparent outline-none text-slate-900 dark:text-slate-100"
+                      aria-label="Ahorro mensual" />
+                    <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 py-2">€</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400">Esta aplicación te ayuda a estimar tu hipoteca y analizar de forma orientativa tu situación financiera. Los datos que introduzcas no se recopilan ni se usan con fines comerciales; algunos valores se guardan en la URL solo para compartir o recuperar tu simulación.</p>
+
+            <!-- Botón calcular (decorativo en SSR shell, lo reemplaza React) -->
+            <button
+              class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold py-3 px-6 transition-colors text-sm tracking-wide"
+              aria-label="Calcular hipoteca"
+            >
+              Calcular
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!--
+    React island: hidrata y oculta el SSR shell una vez montado.
+    client:load garantiza que App se hidrata en cuanto el JS está listo.
+  -->
+  <div id="app-root">
+    <App client:load />
+  </div>
+
+  <script is:inline>
+    // Inyectar CSS de ocultamiento del app-root directamente (evita scoping de Astro).
+    // El SSR shell es visible desde el primer byte (LCP inmediato).
+    // Una vez que React monta (__appMounted), el shell se oculta y el app-root aparece.
+    (function() {
+      var s = document.createElement('style');
+      s.textContent = '#app-root{display:none}#app-root.mounted{display:block}';
+      document.head.appendChild(s);
+    })();
+
+    window.__appMounted = function () {
+      var shell = document.getElementById('ssr-shell');
+      var appRoot = document.getElementById('app-root');
+      if (shell) shell.style.display = 'none';
+      if (appRoot) appRoot.classList.add('mounted');
+    };
+  </script>
 </Layout>

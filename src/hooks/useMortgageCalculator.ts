@@ -1,26 +1,28 @@
 import React, { useState, useMemo } from 'react';
-import { calculateMortgage, generateAmortizationSchedule, calculateMaxLoan } from '../utils';
+import { calculateMortgage, generateAmortizationSchedule, calculateMaxLoan, MORTGAGE_DEFAULTS } from '../utils';
+
+export { MORTGAGE_DEFAULTS } from '../utils';
 
 export function useMortgageCalculator() {
   // Main Inputs
-  const [budgetName, setBudgetName] = useState<string>("Mi Presupuesto");
-  const [propertyValue, setPropertyValue] = useState<string | number>("230000");
-  const [ltv, setLtv] = useState<string | number>("80");
-  const [savings, setSavings] = useState<string | number>("");
-  const [monthlySavings, setMonthlySavings] = useState<string | number>("");
-  const [years, setYears] = useState<string | number>("30");
-  const [mortgageType, setMortgageType] = useState('fixed');
-  const [interestRate, setInterestRate] = useState<string | number>("2.7");
-  const [inflationRate, setInflationRate] = useState<string | number>("2.9");
-  const [monthlyIncome, setMonthlyIncome] = useState<string | number>("");
-  const [equivalentRent, setEquivalentRent] = useState<string | number>("");
-  const [propertyType, setPropertyType] = useState('second-hand');
+  const [budgetName, setBudgetName] = useState<string>(MORTGAGE_DEFAULTS.budgetName);
+  const [propertyValue, setPropertyValue] = useState<string | number>(MORTGAGE_DEFAULTS.propertyValue);
+  const [ltv, setLtv] = useState<string | number>(MORTGAGE_DEFAULTS.ltv);
+  const [savings, setSavings] = useState<string | number>(MORTGAGE_DEFAULTS.savings);
+  const [monthlySavings, setMonthlySavings] = useState<string | number>(MORTGAGE_DEFAULTS.monthlySavings);
+  const [years, setYears] = useState<string | number>(MORTGAGE_DEFAULTS.years);
+  const [mortgageType, setMortgageType] = useState(MORTGAGE_DEFAULTS.mortgageType);
+  const [interestRate, setInterestRate] = useState<string | number>(MORTGAGE_DEFAULTS.interestRate);
+  const [inflationRate, setInflationRate] = useState<string | number>(MORTGAGE_DEFAULTS.inflationRate);
+  const [monthlyIncome, setMonthlyIncome] = useState<string | number>(MORTGAGE_DEFAULTS.monthlyIncome);
+  const [equivalentRent, setEquivalentRent] = useState<string | number>(MORTGAGE_DEFAULTS.equivalentRent);
+  const [propertyType, setPropertyType] = useState(MORTGAGE_DEFAULTS.propertyType);
 
   // Advanced / Tax Inputs
-  const [itpRate, setItpRate] = useState<string | number>("8.0");
-  const [ivaRate, setIvaRate] = useState<string | number>("10.0");
-  const [ajdRate, setAjdRate] = useState<string | number>("1.5");
-  const [ibiAndCommunity, setIbiAndCommunity] = useState<string | number>("1200");
+  const [itpRate, setItpRate] = useState<string | number>(MORTGAGE_DEFAULTS.itpRate);
+  const [ivaRate, setIvaRate] = useState<string | number>(MORTGAGE_DEFAULTS.ivaRate);
+  const [ajdRate, setAjdRate] = useState<string | number>(MORTGAGE_DEFAULTS.ajdRate);
+  const [ibiAndCommunity, setIbiAndCommunity] = useState<string | number>(MORTGAGE_DEFAULTS.ibiAndCommunity);
 
   const handleNumberChange = (setter: React.Dispatch<React.SetStateAction<string | number>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;

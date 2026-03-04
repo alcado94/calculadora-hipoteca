@@ -5,6 +5,27 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Default values for the mortgage calculator.
+// Exported here (no React deps) so Astro SSG pages can import them safely.
+export const MORTGAGE_DEFAULTS = {
+  budgetName: 'Mi Presupuesto',
+  propertyValue: '230000',
+  ltv: '80',
+  savings: '',
+  monthlySavings: '',
+  years: '30',
+  mortgageType: 'fixed',
+  interestRate: '2.7',
+  inflationRate: '2.9',
+  monthlyIncome: '',
+  equivalentRent: '',
+  propertyType: 'second-hand',
+  itpRate: '8.0',
+  ivaRate: '10.0',
+  ajdRate: '1.5',
+  ibiAndCommunity: '1200',
+};
+
 export function formatCurrency(value: number) {
   return new Intl.NumberFormat("es-ES", {
     style: "currency",

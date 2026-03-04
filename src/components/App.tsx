@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { Calculator, Pencil, ChevronDown, ChevronUp, Settings } from 'lucide-react';
 import { cn } from '../utils';
-import { AmortizationChart } from './charts';
+import { LazyAmortizationChart as AmortizationChart } from './charts';
 import { SummaryCards } from './SummaryCards';
 import { AmortizationTable } from './AmortizationTable';
 import { ViabilityAnalysis } from './ViabilityAnalysis';
@@ -35,6 +35,14 @@ const URL_PARAM_KEYS = {
 
 const MORTGAGE_TYPES = new Set(['fixed', 'variable']);
 const PROPERTY_TYPES = new Set(['second-hand', 'new']);
+
+// SSR-safe browser helpers
+const isBrowser = typeof window !== 'undefined';
+const getLocationSearch = () => (isBrowser ? window.location.search : '');
+const getLocationPathname = () => (isBrowser ? window.location.pathname : '/');
+const replaceState = (url: string) => {
+  if (isBrowser) window.history.replaceState({}, '', url);
+};
 
 function isValidNonNegativeNumber(value: string) {
   if (value === '') return true;
@@ -76,16 +84,16 @@ export default function App() {
     params.set(URL_PARAM_KEYS.ibiAndCommunity, String(state.ibiAndCommunity ?? ''));
 
     const queryString = params.toString();
-    const nextUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
-    window.history.replaceState({}, '', nextUrl);
+    const nextUrl = queryString ? `${getLocationPathname()}?${queryString}` : getLocationPathname();
+    replaceState(nextUrl);
   };
 
   const clearUrlParams = () => {
-    window.history.replaceState({}, '', window.location.pathname);
+    replaceState(getLocationPathname());
   };
 
   const hydrateStateFromUrl = () => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(getLocationSearch());
     const hasShareParams = hasKnownShareParams(params);
 
     if (!hasShareParams) {
@@ -145,6 +153,11 @@ export default function App() {
   };
 
   useEffect(() => {
+    // Notify index.astro to hide the SSR shell now that React has mounted
+    if (isBrowser && typeof (window as any).__appMounted === 'function') {
+      (window as any).__appMounted();
+    }
+
     hydrateStateFromUrl();
     hasMounted.current = true;
 
@@ -152,8 +165,8 @@ export default function App() {
       hydrateStateFromUrl();
     };
 
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
+    if (isBrowser) window.addEventListener('popstate', onPopState);
+    return () => { if (isBrowser) window.removeEventListener('popstate', onPopState); };
   }, []);
 
   useEffect(() => {
@@ -399,7 +412,9 @@ export default function App() {
                   case 'table':
                     return (
                       <div className="grid grid-cols-1 gap-6">
-                        <AmortizationChart data={charts.amortizationData} />
+                        <Suspense fallback={<div className="h-[300px] bg-slate-100 dark:bg-slate-800 animate-pulse rounded" />}>
+                          <AmortizationChart data={charts.amortizationData} />
+                        </Suspense>
                         <AmortizationTable data={charts.amortizationData} />
                         <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed px-1">
                           Los resultados de amortización son orientativos y pueden variar según la evaluación y condiciones finales de cada entidad financiera. Esta herramienta ofrece una estimación del coste en función de los datos introducidos, sin constituir una oferta vinculante ni una aprobación del préstamo.
