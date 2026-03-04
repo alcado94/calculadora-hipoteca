@@ -158,6 +158,30 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
           </div>
         </div>
       </main>
+
+      <footer className="border-t border-slate-200/80">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-slate-600">
+          <p className="text-center sm:text-left">
+            Sitio desarrollado por{' '}
+            <a
+              href="https://github.com/alcado94/calculadora-hipoteca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-indigo-600 hover:text-indigo-700"
+            >
+              alcado94
+            </a>
+          </p>
+          <a
+            href="https://github.com/alcado94/calculadora-hipoteca"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
+          >
+            Ver codigo y reportar mejoras
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

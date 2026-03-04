@@ -202,7 +202,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -230,7 +230,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Column: Inputs — solo visible en desktop */}
@@ -431,6 +431,30 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      <footer className="border-t border-slate-200/80">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-slate-600">
+          <p className="text-center sm:text-left">
+            Sitio desarrollado por{' '}
+            <a
+              href="https://github.com/alcado94/calculadora-hipoteca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-indigo-600 hover:text-indigo-700"
+            >
+              alcado94
+            </a>
+          </p>
+          <a
+            href="https://github.com/alcado94/calculadora-hipoteca"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
+          >
+            Ver codigo y reportar mejoras
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
