@@ -208,7 +208,7 @@ export default function App() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button
             onClick={goHome}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3 group cursor-pointer"
             aria-label="Volver al inicio"
           >
             <div className="bg-indigo-600 p-2 rounded-none group-hover:bg-indigo-700 transition-colors">
