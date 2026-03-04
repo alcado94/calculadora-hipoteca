@@ -49,7 +49,7 @@ export function SummaryCards({
   monthlyIncome
 }: SummaryCardsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 auto-rows-fr md:grid-cols-3 gap-4 [&>*]:h-full">
       <MortgageQuotaCard 
         monthlyMortgage={monthlyMortgage}
         monthlyIbiAndCommunity={monthlyIbiAndCommunity}
