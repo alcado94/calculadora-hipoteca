@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calculator, Pencil } from 'lucide-react';
 import { cn } from '../utils';
 import { AmortizationChart, StressTestChart, CostBreakdownChart, InterestScenariosChart } from './charts';
@@ -10,22 +10,53 @@ import { useMortgageCalculator } from '../hooks/useMortgageCalculator';
 import { PropertyForm } from './forms/PropertyForm';
 import { FinancialProfileForm } from './forms/FinancialProfileForm';
 import { TaxesForm } from './forms/TaxesForm';
+import { InitialForm } from './InitialForm';
 
 export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
   const [activeTab, setActiveTab] = useState<'charts' | 'table' | 'viability' | 'rent-vs-buy'>('table');
+  const [hash, setHash] = useState('');
+
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const goHome = () => {
+    window.location.hash = '';
+  };
+
+  const goToResults = () => {
+    window.location.hash = 'resultado';
+  };
+
+  if (hash !== '#resultado') {
+    return (
+      <InitialForm
+        state={state}
+        setters={setters}
+        handleNumberChange={handleNumberChange}
+        onCalculate={goToResults}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-indigo-600 p-2 rounded-none">
+          <button
+            onClick={goHome}
+            className="flex items-center gap-3 group"
+            aria-label="Volver al inicio"
+          >
+            <div className="bg-indigo-600 p-2 rounded-none group-hover:bg-indigo-700 transition-colors">
               <Calculator className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-xl font-semibold tracking-tight hidden sm:block">Calculadora Hipotecaria España</h1>
-          </div>
+            <h1 className="text-xl font-semibold tracking-tight hidden sm:block group-hover:text-indigo-600 transition-colors">Calculadora Hipotecaria España</h1>
+          </button>
           
           <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-none border border-slate-200 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 transition-all">
             <Pencil className="w-4 h-4 text-slate-400" />
