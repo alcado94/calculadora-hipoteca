@@ -36,6 +36,7 @@ export function AmortizationTable({ data }: AmortizationTableProps) {
               <th className="px-5 py-3 font-medium text-right">Capital Pendiente</th>
               <th className="px-5 py-3 font-medium text-right">Capital Amortizado</th>
               <th className="px-5 py-3 font-medium text-right">Intereses Acumulados</th>
+              <th className="px-5 py-3 font-medium text-right">Cuota Real</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +46,7 @@ export function AmortizationTable({ data }: AmortizationTableProps) {
                 <td className="px-5 py-3 text-right">{formatCurrency(row.balance)}</td>
                 <td className="px-5 py-3 text-right">{formatCurrency(row.principalPaid)}</td>
                 <td className="px-5 py-3 text-right">{formatCurrency(row.totalInterest)}</td>
+                <td className="px-5 py-3 text-right text-slate-500">{formatCurrency(row.realMonthlyPayment)}</td>
               </tr>
             ))}
           </tbody>
