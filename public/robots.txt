@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alcado94.github.io/calculadora-hipoteca/sitemap-index.xml
