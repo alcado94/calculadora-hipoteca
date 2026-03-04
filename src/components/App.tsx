@@ -121,15 +121,15 @@ export default function App() {
                   {/* Tabs */}
                   <div className="flex border-b border-slate-200">
                     {([
-                      { id: 'property', label: 'Propiedad' },
-                      { id: 'financial', label: 'Perfil' },
-                      { id: 'taxes', label: 'Gastos' },
+                      { id: 'property', label: 'Datos del inmueble' },
+                      { id: 'financial', label: 'Perfil financiero' },
+                      { id: 'taxes', label: 'Impuestos y gastos' },
                     ] as const).map(tab => (
                       <button
                         key={tab.id}
                         onClick={() => setConfigTab(tab.id)}
                         className={cn(
-                          "flex-1 py-2.5 text-sm font-medium transition-colors border-b-2",
+                          "flex-1 px-2 py-2.5 text-xs leading-tight text-center whitespace-normal font-medium transition-colors border-b-2",
                           configTab === tab.id
                             ? "border-indigo-500 text-indigo-600"
                             : "border-transparent text-slate-500"

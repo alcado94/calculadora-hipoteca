@@ -12,10 +12,12 @@ interface PropertyFormProps {
 export function PropertyForm({ state, setters, handleNumberChange, flatOnMobile = false }: PropertyFormProps) {
   return (
     <Card className="space-y-6" flatOnMobile={flatOnMobile}>
-      <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
-        <Home className="w-5 h-5 text-indigo-600" />
-        <h2 className="text-lg font-semibold">Datos del Inmueble</h2>
-      </div>
+      {!flatOnMobile && (
+        <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
+          <Home className="w-5 h-5 text-indigo-600" />
+          <h2 className="text-lg font-semibold">Datos del Inmueble</h2>
+        </div>
+      )}
       
       <div className="flex flex-col">
         <ListInput 

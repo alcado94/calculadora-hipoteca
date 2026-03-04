@@ -12,10 +12,12 @@ interface FinancialProfileFormProps {
 export function FinancialProfileForm({ state, setters, handleNumberChange, flatOnMobile = false }: FinancialProfileFormProps) {
   return (
     <Card className="space-y-6" flatOnMobile={flatOnMobile}>
-      <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
-        <Wallet className="w-5 h-5 text-emerald-600" />
-        <h2 className="text-lg font-semibold">Perfil Financiero</h2>
-      </div>
+      {!flatOnMobile && (
+        <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
+          <Wallet className="w-5 h-5 text-emerald-600" />
+          <h2 className="text-lg font-semibold">Perfil Financiero</h2>
+        </div>
+      )}
       
       <div className="flex flex-col">
         <ListInput 
