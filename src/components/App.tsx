@@ -244,6 +244,9 @@ export default function App() {
                       <div className="grid grid-cols-1 gap-6">
                         <AmortizationChart data={charts.amortizationData} />
                         <AmortizationTable data={charts.amortizationData} />
+                        <p className="text-xs text-slate-500 leading-relaxed px-1">
+                          Los resultados de amortización son orientativos y pueden variar según la evaluación y condiciones finales de cada entidad financiera. Esta herramienta ofrece una estimación del coste en función de los datos introducidos, sin constituir una oferta vinculante ni una aprobación del préstamo.
+                        </p>
                       </div>
                     );
                   case 'viability':
