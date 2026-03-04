@@ -22,7 +22,7 @@ export function Input({ label, value, onChange, type = "number", min = 0, max, s
             }
           }}
           className={cn(
-            "w-full rounded-none border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
+            "w-full rounded-none border border-slate-300 bg-white px-3 py-3 sm:py-2 text-base sm:text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
             prefix && 'pl-8',
             suffix && 'pr-8',
             disabled && 'bg-slate-100 text-slate-500 cursor-not-allowed'
@@ -41,7 +41,7 @@ export function Select({ label, value, onChange, options }: any) {
       <select
         value={value}
         onChange={onChange}
-        className="w-full rounded-none border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        className="w-full rounded-none border border-slate-300 bg-white px-3 py-3 sm:py-2 text-base sm:text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
       >
         {options.map((opt: any) => (
           <option key={opt.value} value={opt.value}>
@@ -55,7 +55,7 @@ export function Select({ label, value, onChange, options }: any) {
 
 export function ListInput({ label, value, onChange, type = "number", min = 0, max, step, suffix, disabled }: any) {
   return (
-    <div className="flex items-center justify-between py-2.5">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 gap-1.5 sm:gap-0">
       <span className="text-sm text-slate-600">{label}</span>
       <div className="flex items-center gap-1.5">
         <input
@@ -72,7 +72,7 @@ export function ListInput({ label, value, onChange, type = "number", min = 0, ma
             }
           }}
           className={cn(
-            "w-28 text-right rounded-none border border-slate-200 bg-white px-2 py-1 text-sm font-medium text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
+            "w-full sm:w-28 text-right rounded-none border border-slate-200 bg-white px-3 sm:px-2 py-2.5 sm:py-1 text-base sm:text-sm font-medium text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
             disabled && "bg-slate-100 text-slate-500 cursor-not-allowed border-transparent shadow-none"
           )}
         />
@@ -84,13 +84,13 @@ export function ListInput({ label, value, onChange, type = "number", min = 0, ma
 
 export function ListSelect({ label, value, onChange, options }: any) {
   return (
-    <div className="flex items-center justify-between py-2.5">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 gap-1.5 sm:gap-0">
       <span className="text-sm text-slate-600">{label}</span>
       <div className="flex items-center gap-1.5">
         <select
           value={value}
           onChange={onChange}
-          className="w-48 text-right rounded-none border border-slate-200 bg-white px-2 py-1 text-sm font-medium text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="w-full sm:w-48 text-right rounded-none border border-slate-200 bg-white px-3 sm:px-2 py-2.5 sm:py-1 text-base sm:text-sm font-medium text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
           {options.map((opt: any) => (
             <option key={opt.value} value={opt.value}>
