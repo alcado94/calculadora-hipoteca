@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0f172a"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="6" height="630" fill="#3b82f6"/>
+
+  <!-- Grid lines decoration -->
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="#1e293b" stroke-width="1"/>
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="#1e293b" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="#1e293b" stroke-width="1"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Bar chart decoration (bottom right) -->
+  <rect x="820" y="340" width="60" height="180" fill="#1e3a5f" rx="4"/>
+  <rect x="900" y="270" width="60" height="250" fill="#1e3a5f" rx="4"/>
+  <rect x="980" y="300" width="60" height="220" fill="#1e3a5f" rx="4"/>
+  <rect x="1060" y="220" width="60" height="300" fill="#1d4ed8" rx="4"/>
+
+  <!-- Main title -->
+  <text x="80" y="220" font-family="ui-monospace, monospace" font-size="72" font-weight="700" fill="#f8fafc" letter-spacing="-2">Calculadora</text>
+  <text x="80" y="310" font-family="ui-monospace, monospace" font-size="72" font-weight="700" fill="#3b82f6" letter-spacing="-2">Hipotecaria</text>
+  <text x="80" y="400" font-family="ui-monospace, monospace" font-size="56" font-weight="700" fill="#94a3b8" letter-spacing="-1">España</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="480" font-family="ui-monospace, monospace" font-size="26" fill="#64748b">Calcula tu hipoteca con gastos e impuestos reales</text>
+
+  <!-- Tags -->
+  <rect x="80" y="530" width="100" height="36" rx="6" fill="#1e293b"/>
+  <text x="130" y="554" font-family="ui-monospace, monospace" font-size="18" fill="#3b82f6" text-anchor="middle">ITP</text>
+
+  <rect x="194" y="530" width="100" height="36" rx="6" fill="#1e293b"/>
+  <text x="244" y="554" font-family="ui-monospace, monospace" font-size="18" fill="#3b82f6" text-anchor="middle">AJD</text>
+
+  <rect x="308" y="530" width="100" height="36" rx="6" fill="#1e293b"/>
+  <text x="358" y="554" font-family="ui-monospace, monospace" font-size="18" fill="#3b82f6" text-anchor="middle">IVA</text>
+
+  <rect x="422" y="530" width="180" height="36" rx="6" fill="#1e293b"/>
+  <text x="512" y="554" font-family="ui-monospace, monospace" font-size="18" fill="#3b82f6" text-anchor="middle">Notaría</text>
+
+  <rect x="616" y="530" width="180" height="36" rx="6" fill="#1e293b"/>
+  <text x="706" y="554" font-family="ui-monospace, monospace" font-size="18" fill="#3b82f6" text-anchor="middle">Registro</text>
+</svg>
