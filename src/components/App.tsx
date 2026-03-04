@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Pencil } from 'lucide-react';
+import { Calculator, Pencil, ChevronDown, ChevronUp, Settings } from 'lucide-react';
 import { cn } from '../utils';
 import { AmortizationChart } from './charts';
 import { SummaryCards } from './SummaryCards';
@@ -16,6 +16,8 @@ export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
   const [activeTab, setActiveTab] = useState<'table' | 'viability' | 'rent-vs-buy'>('table');
   const [hash, setHash] = useState('');
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [configTab, setConfigTab] = useState<'property' | 'financial' | 'taxes'>('property');
 
   useEffect(() => {
     const onHashChange = () => setHash(window.location.hash);
@@ -74,8 +76,8 @@ export default function App() {
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column: Inputs */}
-          <div className="lg:col-span-4 xl:col-span-3 space-y-6">
+          {/* Left Column: Inputs — solo visible en desktop */}
+          <div className="hidden lg:block lg:col-span-4 xl:col-span-3 space-y-6">
             <PropertyForm 
               state={state} 
               setters={setters} 
@@ -96,6 +98,77 @@ export default function App() {
 
           {/* Right Column: Results & Charts */}
           <div className="lg:col-span-8 xl:col-span-9 space-y-6">
+
+            {/* Panel desplegable de configuración — solo visible en móvil */}
+            <div className="lg:hidden border border-slate-200 bg-white shadow-sm">
+              <button
+                onClick={() => setIsConfigOpen(!isConfigOpen)}
+                className="w-full flex items-center justify-between px-4 py-3.5 text-left"
+                aria-expanded={isConfigOpen}
+              >
+                <div className="flex items-center gap-2.5">
+                  <Settings className="w-4 h-4 text-indigo-600" />
+                  <span className="text-sm font-semibold text-slate-800">Datos de la hipoteca</span>
+                </div>
+                {isConfigOpen
+                  ? <ChevronUp className="w-4 h-4 text-slate-500" />
+                  : <ChevronDown className="w-4 h-4 text-slate-500" />
+                }
+              </button>
+
+              {isConfigOpen && (
+                <div className="border-t border-slate-200">
+                  {/* Tabs */}
+                  <div className="flex border-b border-slate-200">
+                    {([
+                      { id: 'property', label: 'Propiedad' },
+                      { id: 'financial', label: 'Perfil' },
+                      { id: 'taxes', label: 'Gastos' },
+                    ] as const).map(tab => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setConfigTab(tab.id)}
+                        className={cn(
+                          "flex-1 py-2.5 text-sm font-medium transition-colors border-b-2",
+                          configTab === tab.id
+                            ? "border-indigo-500 text-indigo-600"
+                            : "border-transparent text-slate-500"
+                        )}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Contenido del tab activo */}
+                  <div className="p-4">
+                    {configTab === 'property' && (
+                      <PropertyForm
+                        state={state}
+                        setters={setters}
+                        handleNumberChange={handleNumberChange}
+                      />
+                    )}
+                    {configTab === 'financial' && (
+                      <FinancialProfileForm
+                        state={state}
+                        setters={setters}
+                        handleNumberChange={handleNumberChange}
+                      />
+                    )}
+                    {configTab === 'taxes' && (
+                      <TaxesForm
+                        state={state}
+                        setters={setters}
+                        handleNumberChange={handleNumberChange}
+                        derived={derived}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <SummaryCards 
               monthlyMortgage={derived.monthlyPayment}
               monthlyIbiAndCommunity={derived.monthlyIbiAndCommunity}
