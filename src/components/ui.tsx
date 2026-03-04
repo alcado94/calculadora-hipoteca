@@ -104,9 +104,16 @@ export function ListSelect({ label, value, onChange, options }: any) {
   );
 }
 
-export function Card({ children, className = "" }: any) {
+export function Card({ children, className = "", flatOnMobile = false }: any) {
   return (
-    <div className={cn("rounded-none border border-slate-200 bg-white p-5 shadow-sm", className)}>
+    <div
+      className={cn(
+        flatOnMobile
+          ? "rounded-none border-0 bg-white p-0 shadow-none sm:border sm:border-slate-200 sm:p-5 sm:shadow-sm"
+          : "rounded-none border border-slate-200 bg-white p-5 shadow-sm",
+        className
+      )}
+    >
       {children}
     </div>
   );

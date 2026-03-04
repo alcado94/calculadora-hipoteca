@@ -141,12 +141,13 @@ export default function App() {
                   </div>
 
                   {/* Contenido del tab activo */}
-                  <div className="p-4">
+                  <div className="p-3">
                     {configTab === 'property' && (
                       <PropertyForm
                         state={state}
                         setters={setters}
                         handleNumberChange={handleNumberChange}
+                        flatOnMobile
                       />
                     )}
                     {configTab === 'financial' && (
@@ -154,6 +155,7 @@ export default function App() {
                         state={state}
                         setters={setters}
                         handleNumberChange={handleNumberChange}
+                        flatOnMobile
                       />
                     )}
                     {configTab === 'taxes' && (
@@ -162,6 +164,7 @@ export default function App() {
                         setters={setters}
                         handleNumberChange={handleNumberChange}
                         derived={derived}
+                        flatOnMobile
                       />
                     )}
                   </div>

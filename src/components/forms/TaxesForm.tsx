@@ -8,11 +8,12 @@ interface TaxesFormProps {
   setters: any;
   handleNumberChange: any;
   derived: any;
+  flatOnMobile?: boolean;
 }
 
-export function TaxesForm({ state, setters, handleNumberChange, derived }: TaxesFormProps) {
+export function TaxesForm({ state, setters, handleNumberChange, derived, flatOnMobile = false }: TaxesFormProps) {
   return (
-    <Card className="space-y-4">
+    <Card className="space-y-4" flatOnMobile={flatOnMobile}>
       <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
         <Settings2 className="w-5 h-5 text-indigo-600" />
         <h2 className="text-lg font-semibold">Impuestos y Gastos</h2>
