@@ -25,7 +25,7 @@ export function InterestScenariosChart({ data, className }: { data: any[], class
               tickLine={false}
             />
             <Tooltip 
-              formatter={(value: number) => formatCurrency(value)}
+              formatter={(value: number | string | undefined) => formatCurrency(Number(value) || 0)}
               labelFormatter={(label, payload) => {
                 if (payload && payload.length > 0) {
                   return `Escenario: ${label} (${payload[0].payload.rate})`;

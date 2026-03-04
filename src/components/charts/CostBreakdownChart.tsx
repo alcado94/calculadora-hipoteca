@@ -23,7 +23,7 @@ export function CostBreakdownChart({ data, totalCost, className }: { data: any[]
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip formatter={(value: number) => formatCurrency(value)} />
+            <Tooltip formatter={(value: number | string | undefined) => formatCurrency(Number(value) || 0)} />
             <Legend verticalAlign="bottom" height={36} />
           </PieChart>
         </ResponsiveContainer>

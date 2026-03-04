@@ -71,7 +71,7 @@ export function AmortizationChart({ data, className }: { data: any[], className?
               tickLine={false}
             />
             <Tooltip 
-              formatter={(value: number) => formatCurrency(value)}
+              formatter={(value: number | string | undefined) => formatCurrency(Number(value) || 0)}
               labelFormatter={(label) => `Año ${label}`}
             />
             <Legend

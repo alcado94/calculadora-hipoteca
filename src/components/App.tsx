@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calculator, Pencil, ChevronDown, ChevronUp, Settings } from 'lucide-react';
 import { cn } from '../utils';
 import { AmortizationChart } from './charts';
@@ -12,28 +12,185 @@ import { FinancialProfileForm } from './forms/FinancialProfileForm';
 import { TaxesForm } from './forms/TaxesForm';
 import { InitialForm } from './InitialForm';
 
+const URL_PARAM_KEYS = {
+  budgetName: 'bn',
+  propertyValue: 'pv',
+  ltv: 'ltv',
+  savings: 'sv',
+  monthlySavings: 'ms',
+  years: 'y',
+  mortgageType: 'mt',
+  interestRate: 'ir',
+  inflationRate: 'inf',
+  monthlyIncome: 'mi',
+  equivalentRent: 'er',
+  propertyType: 'pt',
+  itpRate: 'itp',
+  ivaRate: 'iva',
+  ajdRate: 'ajd',
+  ibiAndCommunity: 'ibi',
+} as const;
+
+const MORTGAGE_TYPES = new Set(['fixed', 'variable']);
+const PROPERTY_TYPES = new Set(['second-hand', 'new']);
+
+function isValidNonNegativeNumber(value: string) {
+  if (value === '') return true;
+  const parsed = Number(value);
+  return !Number.isNaN(parsed) && parsed >= 0;
+}
+
+function hasKnownShareParams(params: URLSearchParams) {
+  return Object.values(URL_PARAM_KEYS).some((key) => params.has(key));
+}
+
 export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
   const [activeTab, setActiveTab] = useState<'table' | 'viability' | 'rent-vs-buy'>('table');
-  const [hash, setHash] = useState('');
+  const [viewMode, setViewMode] = useState<'form' | 'results'>('form');
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [configTab, setConfigTab] = useState<'property' | 'financial' | 'taxes'>('property');
+  const isHydratingFromUrl = useRef(false);
+  const hasMounted = useRef(false);
+
+  const updateUrlFromState = () => {
+    const params = new URLSearchParams();
+
+    params.set(URL_PARAM_KEYS.budgetName, String(state.budgetName ?? ''));
+    params.set(URL_PARAM_KEYS.propertyValue, String(state.propertyValue ?? ''));
+    params.set(URL_PARAM_KEYS.ltv, String(state.ltv ?? ''));
+    params.set(URL_PARAM_KEYS.savings, String(state.savings ?? ''));
+    params.set(URL_PARAM_KEYS.monthlySavings, String(state.monthlySavings ?? ''));
+    params.set(URL_PARAM_KEYS.years, String(state.years ?? ''));
+    params.set(URL_PARAM_KEYS.mortgageType, String(state.mortgageType ?? ''));
+    params.set(URL_PARAM_KEYS.interestRate, String(state.interestRate ?? ''));
+    params.set(URL_PARAM_KEYS.inflationRate, String(state.inflationRate ?? ''));
+    params.set(URL_PARAM_KEYS.monthlyIncome, String(state.monthlyIncome ?? ''));
+    params.set(URL_PARAM_KEYS.equivalentRent, String(state.equivalentRent ?? ''));
+    params.set(URL_PARAM_KEYS.propertyType, String(state.propertyType ?? ''));
+    params.set(URL_PARAM_KEYS.itpRate, String(state.itpRate ?? ''));
+    params.set(URL_PARAM_KEYS.ivaRate, String(state.ivaRate ?? ''));
+    params.set(URL_PARAM_KEYS.ajdRate, String(state.ajdRate ?? ''));
+    params.set(URL_PARAM_KEYS.ibiAndCommunity, String(state.ibiAndCommunity ?? ''));
+
+    const queryString = params.toString();
+    const nextUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+    window.history.replaceState({}, '', nextUrl);
+  };
+
+  const clearUrlParams = () => {
+    window.history.replaceState({}, '', window.location.pathname);
+  };
+
+  const hydrateStateFromUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    const hasShareParams = hasKnownShareParams(params);
+
+    if (!hasShareParams) {
+      setViewMode('form');
+      return;
+    }
+
+    isHydratingFromUrl.current = true;
+
+    const setValidNumberParam = (
+      key: keyof typeof URL_PARAM_KEYS,
+      setter: (value: string | number) => void,
+    ) => {
+      const paramKey = URL_PARAM_KEYS[key];
+      if (!params.has(paramKey)) return;
+
+      const value = params.get(paramKey) ?? '';
+      if (isValidNonNegativeNumber(value)) {
+        setter(value);
+      }
+    };
+
+    if (params.has(URL_PARAM_KEYS.budgetName)) {
+      setters.setBudgetName(params.get(URL_PARAM_KEYS.budgetName) ?? '');
+    }
+
+    setValidNumberParam('propertyValue', setters.setPropertyValue);
+    setValidNumberParam('ltv', setters.setLtv);
+    setValidNumberParam('savings', setters.setSavings);
+    setValidNumberParam('monthlySavings', setters.setMonthlySavings);
+    setValidNumberParam('years', setters.setYears);
+    setValidNumberParam('interestRate', setters.setInterestRate);
+    setValidNumberParam('inflationRate', setters.setInflationRate);
+    setValidNumberParam('monthlyIncome', setters.setMonthlyIncome);
+    setValidNumberParam('equivalentRent', setters.setEquivalentRent);
+    setValidNumberParam('itpRate', setters.setItpRate);
+    setValidNumberParam('ivaRate', setters.setIvaRate);
+    setValidNumberParam('ajdRate', setters.setAjdRate);
+    setValidNumberParam('ibiAndCommunity', setters.setIbiAndCommunity);
+
+    if (params.has(URL_PARAM_KEYS.mortgageType)) {
+      const mortgageType = params.get(URL_PARAM_KEYS.mortgageType) ?? '';
+      if (MORTGAGE_TYPES.has(mortgageType)) {
+        setters.setMortgageType(mortgageType);
+      }
+    }
+
+    if (params.has(URL_PARAM_KEYS.propertyType)) {
+      const propertyType = params.get(URL_PARAM_KEYS.propertyType) ?? '';
+      if (PROPERTY_TYPES.has(propertyType)) {
+        setters.setPropertyType(propertyType);
+      }
+    }
+
+    setViewMode('results');
+    isHydratingFromUrl.current = false;
+  };
 
   useEffect(() => {
-    const onHashChange = () => setHash(window.location.hash);
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    hydrateStateFromUrl();
+    hasMounted.current = true;
+
+    const onPopState = () => {
+      hydrateStateFromUrl();
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
+  useEffect(() => {
+    if (!hasMounted.current || viewMode !== 'results' || isHydratingFromUrl.current) {
+      return;
+    }
+
+    updateUrlFromState();
+  }, [
+    viewMode,
+    state.budgetName,
+    state.propertyValue,
+    state.ltv,
+    state.savings,
+    state.monthlySavings,
+    state.years,
+    state.mortgageType,
+    state.interestRate,
+    state.inflationRate,
+    state.monthlyIncome,
+    state.equivalentRent,
+    state.propertyType,
+    state.itpRate,
+    state.ivaRate,
+    state.ajdRate,
+    state.ibiAndCommunity,
+  ]);
+
   const goHome = () => {
-    window.location.hash = '';
+    setViewMode('form');
+    clearUrlParams();
   };
 
   const goToResults = () => {
-    window.location.hash = 'resultado';
+    setViewMode('results');
+    updateUrlFromState();
   };
 
-  if (hash !== '#resultado') {
+  if (viewMode !== 'results') {
     return (
       <InitialForm
         state={state}
