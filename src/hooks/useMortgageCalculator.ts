@@ -1,40 +1,59 @@
-import React, { useState, useMemo } from 'react';
-import { calculateMortgage, generateAmortizationSchedule, calculateMaxLoan, MORTGAGE_DEFAULTS } from '../utils';
+import React, { useState, useMemo } from "react";
+import {
+  calculateMortgage,
+  generateAmortizationSchedule,
+  calculateMaxLoan,
+  MORTGAGE_DEFAULTS,
+} from "../utils";
 
-export { MORTGAGE_DEFAULTS } from '../utils';
+export { MORTGAGE_DEFAULTS } from "../utils";
 
 export function useMortgageCalculator() {
   // Main Inputs
   const [budgetName, setBudgetName] = useState<string>(MORTGAGE_DEFAULTS.budgetName);
-  const [propertyValue, setPropertyValue] = useState<string | number>(MORTGAGE_DEFAULTS.propertyValue);
+  const [propertyValue, setPropertyValue] = useState<string | number>(
+    MORTGAGE_DEFAULTS.propertyValue
+  );
   const [ltv, setLtv] = useState<string | number>(MORTGAGE_DEFAULTS.ltv);
   const [savings, setSavings] = useState<string | number>(MORTGAGE_DEFAULTS.savings);
-  const [monthlySavings, setMonthlySavings] = useState<string | number>(MORTGAGE_DEFAULTS.monthlySavings);
+  const [monthlySavings, setMonthlySavings] = useState<string | number>(
+    MORTGAGE_DEFAULTS.monthlySavings
+  );
   const [years, setYears] = useState<string | number>(MORTGAGE_DEFAULTS.years);
   const [mortgageType, setMortgageType] = useState(MORTGAGE_DEFAULTS.mortgageType);
   const [interestRate, setInterestRate] = useState<string | number>(MORTGAGE_DEFAULTS.interestRate);
-  const [inflationRate, setInflationRate] = useState<string | number>(MORTGAGE_DEFAULTS.inflationRate);
-  const [monthlyIncome, setMonthlyIncome] = useState<string | number>(MORTGAGE_DEFAULTS.monthlyIncome);
-  const [equivalentRent, setEquivalentRent] = useState<string | number>(MORTGAGE_DEFAULTS.equivalentRent);
+  const [inflationRate, setInflationRate] = useState<string | number>(
+    MORTGAGE_DEFAULTS.inflationRate
+  );
+  const [monthlyIncome, setMonthlyIncome] = useState<string | number>(
+    MORTGAGE_DEFAULTS.monthlyIncome
+  );
+  const [equivalentRent, setEquivalentRent] = useState<string | number>(
+    MORTGAGE_DEFAULTS.equivalentRent
+  );
   const [propertyType, setPropertyType] = useState(MORTGAGE_DEFAULTS.propertyType);
 
   // Advanced / Tax Inputs
   const [itpRate, setItpRate] = useState<string | number>(MORTGAGE_DEFAULTS.itpRate);
   const [ivaRate, setIvaRate] = useState<string | number>(MORTGAGE_DEFAULTS.ivaRate);
   const [ajdRate, setAjdRate] = useState<string | number>(MORTGAGE_DEFAULTS.ajdRate);
-  const [ibiAndCommunity, setIbiAndCommunity] = useState<string | number>(MORTGAGE_DEFAULTS.ibiAndCommunity);
+  const [ibiAndCommunity, setIbiAndCommunity] = useState<string | number>(
+    MORTGAGE_DEFAULTS.ibiAndCommunity
+  );
 
-  const handleNumberChange = (setter: React.Dispatch<React.SetStateAction<string | number>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    if (val === '') {
-      setter('');
-      return;
-    }
-    const num = Number(val);
-    if (!isNaN(num) && num >= 0) {
-      setter(val);
-    }
-  };
+  const handleNumberChange =
+    (setter: React.Dispatch<React.SetStateAction<string | number>>) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const val = e.target.value;
+      if (val === "") {
+        setter("");
+        return;
+      }
+      const num = Number(val);
+      if (!isNaN(num) && num >= 0) {
+        setter(val);
+      }
+    };
 
   // Derived Calculations
   const numPropertyValue = Number(propertyValue) || 0;
@@ -60,28 +79,31 @@ export function useMortgageCalculator() {
 
   const loanAmount = Math.max(0, numPropertyValue * (numLtv / 100));
   const downPayment = Math.max(0, numPropertyValue - loanAmount);
-  
-  const taxes = propertyType === 'new' 
-    ? (numPropertyValue * (numIvaRate / 100)) + (numPropertyValue * (numAjdRate / 100))
-    : (numPropertyValue * (numItpRate / 100));
-    
+
+  const taxes =
+    propertyType === "new"
+      ? numPropertyValue * (numIvaRate / 100) + numPropertyValue * (numAjdRate / 100)
+      : numPropertyValue * (numItpRate / 100);
+
   const otherExpenses = numNotaryFee + numRegistryFee + numGestoriaFee + numTasacionFee;
   const totalExpenses = taxes + otherExpenses;
   const totalInitialCash = downPayment + totalExpenses;
-  
+
   // Savings calculations
   const missingSavings = Math.max(0, totalInitialCash - numSavings);
   const monthsToSave = numMonthlySavings > 0 ? Math.ceil(missingSavings / numMonthlySavings) : 0;
   const yearsToSave = +(monthsToSave / 12).toFixed(1);
   const freeIncome = numMonthlyIncome - numEquivalentRent - numMonthlySavings;
   const isSavingsRealistic = freeIncome >= 0;
-  
+
   const monthlyPayment = calculateMortgage(loanAmount, numInterestRate, numYears);
   const totalMonthlyPayment = monthlyPayment + monthlyIbiAndCommunity;
-  const affordabilityRatio = numMonthlyIncome > 0 ? (totalMonthlyPayment / numMonthlyIncome) * 100 : 0;
-  const totalInterestPaid = (monthlyPayment * numYears * 12) - loanAmount;
-  const totalCostOfProperty = numPropertyValue + totalExpenses + totalInterestPaid + (numIbiAndCommunity * numYears);
-  const maxLoanAmount = calculateMaxLoan(numMonthlyIncome, numInterestRate, numYears, 0.30);
+  const affordabilityRatio =
+    numMonthlyIncome > 0 ? (totalMonthlyPayment / numMonthlyIncome) * 100 : 0;
+  const totalInterestPaid = monthlyPayment * numYears * 12 - loanAmount;
+  const totalCostOfProperty =
+    numPropertyValue + totalExpenses + totalInterestPaid + numIbiAndCommunity * numYears;
+  const maxLoanAmount = calculateMaxLoan(numMonthlyIncome, numInterestRate, numYears, 0.3);
 
   // Chart Data
   const amortizationData = useMemo(() => {
@@ -89,16 +111,16 @@ export function useMortgageCalculator() {
   }, [loanAmount, numInterestRate, numYears, numInflationRate]);
 
   const pieData = [
-    { name: 'Valor Inmueble', value: numPropertyValue, color: '#3b82f6' },
-    { name: 'Intereses', value: totalInterestPaid, color: '#f59e0b' },
-    { name: 'Impuestos y Gastos', value: totalExpenses, color: '#ef4444' },
-    { name: 'IBI y Comunidad', value: numIbiAndCommunity * numYears, color: '#10b981' },
+    { name: "Valor Inmueble", value: numPropertyValue, color: "#3b82f6" },
+    { name: "Intereses", value: totalInterestPaid, color: "#f59e0b" },
+    { name: "Impuestos y Gastos", value: totalExpenses, color: "#ef4444" },
+    { name: "IBI y Comunidad", value: numIbiAndCommunity * numYears, color: "#10b981" },
   ];
 
   const stressTestData = useMemo(() => {
     const data = [];
     for (let i = -4; i <= 4; i++) {
-      const rate = Math.max(0, numInterestRate + (i * 0.1));
+      const rate = Math.max(0, numInterestRate + i * 0.1);
       data.push({
         rate: `${rate.toFixed(2)}%`,
         payment: calculateMortgage(loanAmount, rate, numYears),
@@ -110,29 +132,29 @@ export function useMortgageCalculator() {
   const scenarioData = useMemo(() => {
     return [
       {
-        scenario: 'Actual',
+        scenario: "Actual",
         rate: `${numInterestRate.toFixed(2)}%`,
         payment: calculateMortgage(loanAmount, numInterestRate, numYears),
-        isCurrent: true
+        isCurrent: true,
       },
       {
-        scenario: '+1%',
+        scenario: "+1%",
         rate: `${(numInterestRate + 1).toFixed(2)}%`,
         payment: calculateMortgage(loanAmount, numInterestRate + 1, numYears),
-        isCurrent: false
+        isCurrent: false,
       },
       {
-        scenario: '+2%',
+        scenario: "+2%",
         rate: `${(numInterestRate + 2).toFixed(2)}%`,
         payment: calculateMortgage(loanAmount, numInterestRate + 2, numYears),
-        isCurrent: false
+        isCurrent: false,
       },
       {
-        scenario: '+3%',
+        scenario: "+3%",
         rate: `${(numInterestRate + 3).toFixed(2)}%`,
         payment: calculateMortgage(loanAmount, numInterestRate + 3, numYears),
-        isCurrent: false
-      }
+        isCurrent: false,
+      },
     ];
   }, [loanAmount, numInterestRate, numYears]);
 
@@ -216,6 +238,6 @@ export function useMortgageCalculator() {
       pieData,
       stressTestData,
       scenarioData,
-    }
+    },
   };
 }

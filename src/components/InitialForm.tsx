@@ -1,7 +1,7 @@
-import React from 'react';
-import { Calculator } from 'lucide-react';
-import { Input, Select } from './ui';
-import { Footer } from './Footer';
+import React from "react";
+import { Calculator } from "lucide-react";
+import { Input, Select } from "./ui";
+import { Footer } from "./Footer";
 
 interface InitialFormProps {
   state: {
@@ -30,13 +30,12 @@ interface InitialFormProps {
 
 export function InitialForm({ state, setters, handleNumberChange, onCalculate }: InitialFormProps) {
   const mortgageTypeOptions = [
-    { value: 'fixed', label: 'Fija' },
-    { value: 'variable', label: 'Variable' },
+    { value: "fixed", label: "Fija" },
+    { value: "variable", label: "Variable" },
   ];
 
-  const interestRateLabel = state.mortgageType === 'fixed'
-    ? 'Tipo de Interés Fijo'
-    : 'Tipo de Interés Variable';
+  const interestRateLabel =
+    state.mortgageType === "fixed" ? "Tipo de Interés Fijo" : "Tipo de Interés Variable";
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col">
@@ -57,13 +56,17 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
         <div className="w-full max-w-2xl">
           {/* Title */}
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Calcula tu hipoteca</h2>
+            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              Calcula tu hipoteca
+            </h2>
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8 space-y-8">
             {/* Sección 1: Datos del inmueble */}
             <div>
-              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">Datos del Inmueble</h3>
+              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">
+                Datos del Inmueble
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="sm:col-span-2">
                   <Input
@@ -96,7 +99,9 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
                 <Select
                   label="Tipo de Hipoteca"
                   value={state.mortgageType}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setters.setMortgageType(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    setters.setMortgageType(e.target.value)
+                  }
                   options={mortgageTypeOptions}
                 />
                 <Input
@@ -115,7 +120,9 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
 
             {/* Sección 2: Perfil financiero */}
             <div>
-              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">Perfil Financiero</h3>
+              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">
+                Perfil Financiero
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Input
                   label="Ahorro Actual"
@@ -147,7 +154,12 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
               </div>
             </div>
 
-            <p className="text-xs text-slate-500 dark:text-slate-400">Esta aplicación te ayuda a estimar tu hipoteca y analizar de forma orientativa tu situación financiera. Los datos que introduzcas no se recopilan ni se usan con fines comerciales; algunos valores se guardan en la URL solo para compartir o recuperar tu simulación.</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Esta aplicación te ayuda a estimar tu hipoteca y analizar de forma orientativa tu
+              situación financiera. Los datos que introduzcas no se recopilan ni se usan con fines
+              comerciales; algunos valores se guardan en la URL solo para compartir o recuperar tu
+              simulación.
+            </p>
 
             {/* Botón calcular */}
             <button

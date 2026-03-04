@@ -8,22 +8,22 @@ export function cn(...inputs: ClassValue[]) {
 // Default values for the mortgage calculator.
 // Exported here (no React deps) so Astro SSG pages can import them safely.
 export const MORTGAGE_DEFAULTS = {
-  budgetName: 'Mi Presupuesto',
-  propertyValue: '230000',
-  ltv: '80',
-  savings: '',
-  monthlySavings: '',
-  years: '30',
-  mortgageType: 'fixed',
-  interestRate: '2.7',
-  inflationRate: '2.9',
-  monthlyIncome: '',
-  equivalentRent: '',
-  propertyType: 'second-hand',
-  itpRate: '8.0',
-  ivaRate: '10.0',
-  ajdRate: '1.5',
-  ibiAndCommunity: '1200',
+  budgetName: "Mi Presupuesto",
+  propertyValue: "230000",
+  ltv: "80",
+  savings: "",
+  monthlySavings: "",
+  years: "30",
+  mortgageType: "fixed",
+  interestRate: "2.7",
+  inflationRate: "2.9",
+  monthlyIncome: "",
+  equivalentRent: "",
+  propertyType: "second-hand",
+  itpRate: "8.0",
+  ivaRate: "10.0",
+  ajdRate: "1.5",
+  ibiAndCommunity: "1200",
 };
 
 export function formatCurrency(value: number) {
@@ -34,13 +34,18 @@ export function formatCurrency(value: number) {
   }).format(value);
 }
 
-export function calculateMaxLoan(monthlyIncome: number, annualRate: number, years: number, maxRatio: number = 0.30) {
+export function calculateMaxLoan(
+  monthlyIncome: number,
+  annualRate: number,
+  years: number,
+  maxRatio: number = 0.3
+) {
   const maxMonthlyPayment = monthlyIncome * maxRatio;
   const monthlyRate = annualRate / 100 / 12;
   const numPayments = years * 12;
-  
+
   if (monthlyRate === 0) return maxMonthlyPayment * numPayments;
-  
+
   // Formula derived from standard mortgage calculation:
   // P = (M * (1 - (1 + r)^-n)) / r
   return (maxMonthlyPayment * (1 - Math.pow(1 + monthlyRate, -numPayments))) / monthlyRate;
@@ -49,36 +54,43 @@ export function calculateMaxLoan(monthlyIncome: number, annualRate: number, year
 export function calculateMortgage(principal: number, annualRate: number, years: number) {
   const monthlyRate = annualRate / 100 / 12;
   const numPayments = years * 12;
-  
+
   if (monthlyRate === 0) return principal / numPayments;
-  
-  return (principal * monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
-         (Math.pow(1 + monthlyRate, numPayments) - 1);
+
+  return (
+    (principal * monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+    (Math.pow(1 + monthlyRate, numPayments) - 1)
+  );
 }
 
-export function generateAmortizationSchedule(principal: number, annualRate: number, years: number, inflationRate: number = 0) {
+export function generateAmortizationSchedule(
+  principal: number,
+  annualRate: number,
+  years: number,
+  inflationRate: number = 0
+) {
   const monthlyRate = annualRate / 100 / 12;
   const numPayments = years * 12;
   const monthlyPayment = calculateMortgage(principal, annualRate, years);
-  
+
   let balance = principal;
   const schedule = [];
-  
+
   let totalInterest = 0;
   let totalPrincipal = 0;
-  
+
   for (let i = 1; i <= numPayments; i++) {
     const interestPayment = balance * monthlyRate;
     const principalPayment = monthlyPayment - interestPayment;
-    
+
     balance -= principalPayment;
     totalInterest += interestPayment;
     totalPrincipal += principalPayment;
-    
+
     if (i % 12 === 0 || i === numPayments) {
       const year = Math.ceil(i / 12);
       const realMonthlyPayment = monthlyPayment / Math.pow(1 + inflationRate / 100, year);
-      
+
       schedule.push({
         year: year,
         balance: Math.max(0, balance),
@@ -89,6 +101,6 @@ export function generateAmortizationSchedule(principal: number, annualRate: numb
       });
     }
   }
-  
+
   return schedule;
 }

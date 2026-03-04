@@ -1,7 +1,7 @@
-import React from 'react';
-import { MortgageQuotaCard } from './summary/MortgageQuotaCard';
-import { RequiredSavingsCard } from './summary/RequiredSavingsCard';
-import { MortgageAmountCard } from './summary/MortgageAmountCard';
+import React from "react";
+import { MortgageQuotaCard } from "./summary/MortgageQuotaCard";
+import { RequiredSavingsCard } from "./summary/RequiredSavingsCard";
+import { MortgageAmountCard } from "./summary/MortgageAmountCard";
 
 interface SummaryCardsProps {
   monthlyMortgage: number;
@@ -26,13 +26,13 @@ interface SummaryCardsProps {
   monthlyIncome: number;
 }
 
-export function SummaryCards({ 
+export function SummaryCards({
   monthlyMortgage,
   monthlyIbiAndCommunity,
-  years, 
-  totalInitialCash, 
-  totalExpenses, 
-  loanAmount, 
+  years,
+  totalInitialCash,
+  totalExpenses,
+  loanAmount,
   downPayment,
   affordabilityRatio,
   savings,
@@ -46,19 +46,19 @@ export function SummaryCards({
   totalInterestPaid,
   totalCostOfProperty,
   ltv,
-  monthlyIncome
+  monthlyIncome,
 }: SummaryCardsProps) {
   return (
     <div className="grid grid-cols-1 auto-rows-fr md:grid-cols-3 gap-4 [&>*]:h-full">
-      <MortgageQuotaCard 
+      <MortgageQuotaCard
         monthlyMortgage={monthlyMortgage}
         monthlyIbiAndCommunity={monthlyIbiAndCommunity}
         years={years}
         affordabilityRatio={affordabilityRatio}
         monthlyIncome={monthlyIncome}
       />
-      
-      <RequiredSavingsCard 
+
+      <RequiredSavingsCard
         totalInitialCash={totalInitialCash}
         downPayment={downPayment}
         totalExpenses={totalExpenses}
@@ -73,7 +73,7 @@ export function SummaryCards({
         monthlyIncome={monthlyIncome}
       />
 
-      <MortgageAmountCard 
+      <MortgageAmountCard
         loanAmount={loanAmount}
         ltv={ltv}
         totalInterestPaid={totalInterestPaid}

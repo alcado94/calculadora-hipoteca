@@ -1,12 +1,26 @@
-import React from 'react';
-import { cn } from '../utils';
+import React from "react";
+import { cn } from "../utils";
 
-export function Input({ label, value, onChange, type = "number", min = 0, max, step, suffix, prefix, disabled, placeholder }: any) {
+export function Input({
+  label,
+  value,
+  onChange,
+  type = "number",
+  min = 0,
+  max,
+  step,
+  suffix,
+  prefix,
+  disabled,
+  placeholder,
+}: any) {
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</label>
       <div className="relative flex items-center">
-        {prefix && <span className="absolute left-3 text-slate-500 dark:text-slate-400">{prefix}</span>}
+        {prefix && (
+          <span className="absolute left-3 text-slate-500 dark:text-slate-400">{prefix}</span>
+        )}
         <input
           type={type}
           value={value}
@@ -17,18 +31,21 @@ export function Input({ label, value, onChange, type = "number", min = 0, max, s
           disabled={disabled}
           placeholder={placeholder}
           onKeyDown={(e) => {
-            if (type === 'number' && ['e', 'E', '+', '-'].includes(e.key)) {
+            if (type === "number" && ["e", "E", "+", "-"].includes(e.key)) {
               e.preventDefault();
             }
           }}
           className={cn(
             "w-full rounded-none border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-3 sm:py-2 text-base sm:text-sm text-slate-900 dark:text-slate-100 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400",
-            prefix && 'pl-8',
-            suffix && 'pr-8',
-            disabled && 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 cursor-not-allowed'
+            prefix && "pl-8",
+            suffix && "pr-8",
+            disabled &&
+              "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 cursor-not-allowed"
           )}
         />
-        {suffix && <span className="absolute right-3 text-slate-500 dark:text-slate-400">{suffix}</span>}
+        {suffix && (
+          <span className="absolute right-3 text-slate-500 dark:text-slate-400">{suffix}</span>
+        )}
       </div>
     </div>
   );
@@ -53,14 +70,27 @@ export function Select({ label, value, onChange, options }: any) {
   );
 }
 
-export function ListInput({ label, value, onChange, type = "number", min = 0, max, step, suffix, disabled, helpText }: any) {
+export function ListInput({
+  label,
+  value,
+  onChange,
+  type = "number",
+  min = 0,
+  max,
+  step,
+  suffix,
+  disabled,
+  helpText,
+}: any) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 gap-1.5 sm:gap-0">
       <div className="flex items-center gap-1.5">
         <span className="text-sm text-slate-600 dark:text-slate-400">{label}</span>
         {helpText && (
           <div className="relative group cursor-help">
-            <span className="inline-flex h-4 w-4 items-center justify-center border border-slate-300 dark:border-slate-600 text-[10px] font-semibold text-slate-500 dark:text-slate-400">i</span>
+            <span className="inline-flex h-4 w-4 items-center justify-center border border-slate-300 dark:border-slate-600 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+              i
+            </span>
             <div className="absolute bottom-full left-1/2 z-10 mb-2 w-56 -translate-x-1/2 bg-slate-800 dark:bg-slate-700 p-2 text-center text-xs text-white opacity-0 shadow-lg transition-opacity pointer-events-none group-hover:opacity-100">
               {helpText}
               <div className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-slate-800 dark:border-t-slate-700"></div>
@@ -78,13 +108,14 @@ export function ListInput({ label, value, onChange, type = "number", min = 0, ma
           step={step}
           disabled={disabled}
           onKeyDown={(e) => {
-            if (type === 'number' && ['e', 'E', '+', '-'].includes(e.key)) {
+            if (type === "number" && ["e", "E", "+", "-"].includes(e.key)) {
               e.preventDefault();
             }
           }}
           className={cn(
             "w-full sm:w-28 text-right rounded-none border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 sm:px-2 py-2.5 sm:py-1 text-base sm:text-sm font-medium text-slate-900 dark:text-slate-100 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400",
-            disabled && "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 cursor-not-allowed border-transparent shadow-none"
+            disabled &&
+              "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 cursor-not-allowed border-transparent shadow-none"
           )}
         />
         {suffix && <span className="text-sm text-slate-500 dark:text-slate-400 w-4">{suffix}</span>}

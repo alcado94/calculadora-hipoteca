@@ -5,37 +5,39 @@ interface Props {
 }
 
 const {
-  title = 'Calculadora Hipotecaria España | Simula tu Hipoteca Gratis',
-  description = 'Calcula tu hipoteca en España: cuotas, ITP/IVA/AJD, notaría y registro, esfuerzo financiero y comparativa alquiler vs compra. Gratis, sin registro.',
+  title = "Calculadora Hipotecaria España | Simula tu Hipoteca Gratis",
+  description = "Calcula tu hipoteca en España: cuotas, ITP/IVA/AJD, notaría y registro, esfuerzo financiero y comparativa alquiler vs compra. Gratis, sin registro.",
 } = Astro.props;
 
-const canonicalURL = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site)
-  : Astro.url;
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
 
 const ogImage = Astro.site
-  ? new URL('/calculadora-hipoteca/og-image.png', Astro.site).href
-  : '/calculadora-hipoteca/og-image.png';
+  ? new URL("/calculadora-hipoteca/og-image.png", Astro.site).href
+  : "/calculadora-hipoteca/og-image.png";
 
 const webApplicationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: 'Simulador de hipoteca',
-  alternateName: ['Calculadora Hipotecaria', 'Calculadora Hipotecaria España', 'Calculadora de hipoteca'],
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Simulador de hipoteca",
+  alternateName: [
+    "Calculadora Hipotecaria",
+    "Calculadora Hipotecaria España",
+    "Calculadora de hipoteca",
+  ],
   description,
   url: canonicalURL.href,
-  applicationCategory: 'FinanceApplication',
-  operatingSystem: 'Any',
-  inLanguage: 'es-ES',
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  inLanguage: "es-ES",
   offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'EUR',
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "EUR",
   },
 };
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -47,7 +49,10 @@ const webApplicationSchema = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="simulador de hipoteca, calculadora hipotecaria, calculadora de hipoteca, calculadora hipotecaria espana, hipoteca espana" />
+    <meta
+      name="keywords"
+      content="simulador de hipoteca, calculadora hipotecaria, calculadora de hipoteca, calculadora hipotecaria espana, hipoteca espana"
+    />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
@@ -69,10 +74,7 @@ const webApplicationSchema = {
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={title} />
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(webApplicationSchema)}
-    />
+    <script type="application/ld+json" set:html={JSON.stringify(webApplicationSchema)} />
 
     <!-- Google Fonts: Geist Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -84,16 +86,16 @@ const webApplicationSchema = {
 
     <script is:inline>
       (() => {
-        const storageKey = 'theme';
+        const storageKey = "theme";
         const storedTheme = localStorage.getItem(storageKey);
-        const hasStoredTheme = storedTheme === 'light' || storedTheme === 'dark';
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const resolvedTheme = hasStoredTheme ? storedTheme : (prefersDark ? 'dark' : 'light');
+        const hasStoredTheme = storedTheme === "light" || storedTheme === "dark";
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const resolvedTheme = hasStoredTheme ? storedTheme : prefersDark ? "dark" : "light";
 
-        if (resolvedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
+        if (resolvedTheme === "dark") {
+          document.documentElement.classList.add("dark");
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove("dark");
         }
       })();
     </script>
