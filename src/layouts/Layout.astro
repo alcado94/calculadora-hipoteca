@@ -80,6 +80,22 @@ const webApplicationSchema = {
       href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap"
       rel="stylesheet"
     />
+
+    <script is:inline>
+      (() => {
+        const storageKey = 'theme';
+        const storedTheme = localStorage.getItem(storageKey);
+        const hasStoredTheme = storedTheme === 'light' || storedTheme === 'dark';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const resolvedTheme = hasStoredTheme ? storedTheme : (prefersDark ? 'dark' : 'light');
+
+        if (resolvedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <slot />

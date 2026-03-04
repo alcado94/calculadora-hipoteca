@@ -34,7 +34,7 @@ export function MortgageQuotaCard({
   }
 
   return (
-    <Card className="bg-indigo-600 text-white border-none flex flex-col">
+    <Card className="bg-indigo-600 dark:bg-indigo-700 text-white border-none flex flex-col">
       <div className="flex justify-between items-start mb-1">
         <div className="text-indigo-100 text-sm font-medium">Cuota Hipoteca</div>
         <div className="flex gap-2">

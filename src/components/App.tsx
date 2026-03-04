@@ -11,6 +11,8 @@ import { PropertyForm } from './forms/PropertyForm';
 import { FinancialProfileForm } from './forms/FinancialProfileForm';
 import { TaxesForm } from './forms/TaxesForm';
 import { InitialForm } from './InitialForm';
+import { ThemeProvider } from './ThemeProvider';
+import { Footer } from './Footer';
 
 const URL_PARAM_KEYS = {
   budgetName: 'bn',
@@ -190,41 +192,39 @@ export default function App() {
     updateUrlFromState();
   };
 
-  if (viewMode !== 'results') {
-    return (
-      <InitialForm
-        state={state}
-        setters={setters}
-        handleNumberChange={handleNumberChange}
-        onCalculate={goToResults}
-      />
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
+    <ThemeProvider>
+      {viewMode !== 'results' ? (
+        <InitialForm
+          state={state}
+          setters={setters}
+          handleNumberChange={handleNumberChange}
+          onCalculate={goToResults}
+        />
+      ) : (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button
             onClick={goHome}
             className="flex items-center gap-3 group cursor-pointer"
             aria-label="Volver al inicio"
           >
-            <div className="bg-indigo-600 p-2 rounded-none group-hover:bg-indigo-700 transition-colors">
+            <div className="bg-indigo-600 dark:bg-indigo-500 p-2 rounded-none group-hover:bg-indigo-700 dark:group-hover:bg-indigo-600 transition-colors">
               <Calculator className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-xl font-semibold tracking-tight hidden sm:block group-hover:text-indigo-600 transition-colors">Simulador de hipoteca</h1>
+            <h1 className="text-xl font-semibold tracking-tight hidden sm:block group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Simulador de hipoteca</h1>
           </button>
           
-          <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-none border border-slate-200 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 transition-all">
-            <Pencil className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-none border border-slate-200 dark:border-slate-600 focus-within:border-indigo-500 dark:focus-within:border-indigo-400 focus-within:ring-1 focus-within:ring-indigo-500 dark:focus-within:ring-indigo-400 transition-all">
+            <Pencil className="w-4 h-4 text-slate-400 dark:text-slate-500" />
             <input 
               type="text" 
               value={state.budgetName}
               onChange={(e) => setters.setBudgetName(e.target.value)}
               placeholder="Nombre del presupuesto..."
-              className="bg-transparent border-none outline-none text-sm font-medium text-slate-700 w-48 sm:w-64 placeholder:text-slate-400"
+              className="bg-transparent border-none outline-none text-sm font-medium text-slate-700 dark:text-slate-200 w-48 sm:w-64 placeholder:text-slate-400 dark:placeholder:text-slate-500"
             />
           </div>
         </div>
@@ -257,26 +257,26 @@ export default function App() {
           <div className="lg:col-span-8 xl:col-span-9 space-y-6">
 
             {/* Panel desplegable de configuración — solo visible en móvil */}
-            <div className="lg:hidden border border-slate-200 bg-white shadow-sm">
+            <div className="lg:hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
               <button
                 onClick={() => setIsConfigOpen(!isConfigOpen)}
                 className="w-full flex items-center justify-between px-4 py-3.5 text-left"
                 aria-expanded={isConfigOpen}
               >
                 <div className="flex items-center gap-2.5">
-                  <Settings className="w-4 h-4 text-indigo-600" />
-                  <span className="text-sm font-semibold text-slate-800">Datos de la hipoteca</span>
+                  <Settings className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">Datos de la hipoteca</span>
                 </div>
                 {isConfigOpen
-                  ? <ChevronUp className="w-4 h-4 text-slate-500" />
-                  : <ChevronDown className="w-4 h-4 text-slate-500" />
+                  ? <ChevronUp className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                  : <ChevronDown className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 }
               </button>
 
               {isConfigOpen && (
-                <div className="border-t border-slate-200">
+                <div className="border-t border-slate-200 dark:border-slate-700">
                   {/* Tabs */}
-                  <div className="flex border-b border-slate-200">
+                  <div className="flex border-b border-slate-200 dark:border-slate-700">
                     {([
                       { id: 'property', label: 'Datos del inmueble' },
                       { id: 'financial', label: 'Perfil financiero' },
@@ -288,8 +288,8 @@ export default function App() {
                         className={cn(
                           "flex-1 px-2 py-2.5 text-xs leading-tight text-center whitespace-normal font-medium transition-colors border-b-2",
                           configTab === tab.id
-                            ? "border-indigo-500 text-indigo-600"
-                            : "border-transparent text-slate-500"
+                            ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
+                            : "border-transparent text-slate-500 dark:text-slate-400"
                         )}
                       >
                         {tab.label}
@@ -353,15 +353,15 @@ export default function App() {
             />
 
             {/* Tabs Navigation */}
-            <div className="border-b border-slate-200 mb-6">
+            <div className="border-b border-slate-200 dark:border-slate-700 mb-6">
               <nav className="-mb-px flex space-x-8 overflow-x-auto" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('table')}
                   className={cn(
                     "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
                     activeTab === 'table'
-                      ? "border-indigo-500 text-indigo-600"
-                      : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                      ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
+                      : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600"
                   )}
                 >
                   Detalle de Amortización
@@ -371,8 +371,8 @@ export default function App() {
                   className={cn(
                     "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
                     activeTab === 'viability'
-                      ? "border-indigo-500 text-indigo-600"
-                      : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                      ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
+                      : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600"
                   )}
                 >
                   Análisis de Viabilidad
@@ -382,8 +382,8 @@ export default function App() {
                   className={cn(
                     "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
                     activeTab === 'rent-vs-buy'
-                      ? "border-indigo-500 text-indigo-600"
-                      : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                      ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
+                      : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600"
                   )}
                 >
                   Comprar vs Alquilar
@@ -401,7 +401,7 @@ export default function App() {
                       <div className="grid grid-cols-1 gap-6">
                         <AmortizationChart data={charts.amortizationData} />
                         <AmortizationTable data={charts.amortizationData} />
-                        <p className="text-xs text-slate-500 leading-relaxed px-1">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed px-1">
                           Los resultados de amortización son orientativos y pueden variar según la evaluación y condiciones finales de cada entidad financiera. Esta herramienta ofrece una estimación del coste en función de los datos introducidos, sin constituir una oferta vinculante ni una aprobación del préstamo.
                         </p>
                       </div>
@@ -432,29 +432,9 @@ export default function App() {
         </div>
       </main>
 
-      <footer className="border-t border-slate-200/80">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-slate-600">
-          <p className="text-center sm:text-left">
-            Sitio desarrollado por{' '}
-            <a
-              href="https://github.com/alcado94/calculadora-hipoteca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-indigo-600 hover:text-indigo-700"
-            >
-              alcado94
-            </a>
-          </p>
-          <a
-            href="https://github.com/alcado94/calculadora-hipoteca"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
-          >
-            Ver codigo y reportar mejoras
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
+      )}
+    </ThemeProvider>
   );
 }

@@ -14,9 +14,9 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
   if (numMonthlyRent === 0) {
     return (
       <Card className="flex flex-col items-center justify-center py-16 text-center gap-3">
-        <Info className="w-8 h-8 text-slate-300" />
-        <p className="text-slate-500 text-sm max-w-xs">
-          Introduce el <strong className="text-slate-700">alquiler actual o estimado</strong> en el perfil financiero para calcular la rentabilidad bruta y el análisis de comprar vs. alquilar.
+        <Info className="w-8 h-8 text-slate-300 dark:text-slate-600" />
+        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xs">
+          Introduce el <strong className="text-slate-700 dark:text-slate-200">alquiler actual o estimado</strong> en el perfil financiero para calcular la rentabilidad bruta y el análisis de comprar vs. alquilar.
         </p>
       </Card>
     );
@@ -59,7 +59,7 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-100 rounded-none p-4 flex gap-3 text-blue-800">
+      <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-800 rounded-none p-4 flex gap-3 text-blue-800 dark:text-blue-300">
         <Info className="w-5 h-5 shrink-0 mt-0.5" />
         <div className="text-sm">
           <strong>Consejo:</strong> Para que este análisis sea preciso, el alquiler introducido en los datos de la hipoteca debe corresponder a una <strong>propiedad equivalente</strong> (mismas características, metros cuadrados, zona y estado de conservación).
@@ -70,7 +70,7 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
         <Card className={`lg:col-span-2 flex flex-col justify-center border-l-4 ${yieldBorderColor}`}>
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
             <div className="text-center md:text-left shrink-0">
-              <div className="text-slate-500 font-medium mb-1">Rentabilidad Bruta (Yield)</div>
+              <div className="text-slate-500 dark:text-slate-400 font-medium mb-1">Rentabilidad Bruta (Yield)</div>
               <div className={`text-6xl font-bold tracking-tight mb-2 ${yieldColor}`}>
                 {grossYield.toFixed(1)}%
               </div>
@@ -79,16 +79,16 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
               </div>
             </div>
             
-            <div className="flex-1 pt-2 md:pt-0 md:border-l md:border-slate-100 md:pl-8">
-              <h3 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+            <div className="flex-1 pt-2 md:pt-0 md:border-l md:border-slate-100 md:dark:border-slate-700 md:pl-8">
+              <h3 className="font-semibold text-slate-800 dark:text-slate-100 mb-2 flex items-center gap-2">
                 <AlertCircle className={`w-5 h-5 ${yieldColor}`} />
                 Interpretación
               </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
                 {yieldDescription}
               </p>
               {grossYield < 3 && (
-                <p className="text-slate-700 text-sm leading-relaxed mt-2 font-medium">
+                <p className="text-slate-700 dark:text-slate-200 text-sm leading-relaxed mt-2 font-medium">
                   📌 Si la yield es muy baja, financieramente suele ser mejor alquilar.
                 </p>
               )}
@@ -96,21 +96,21 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
           </div>
         </Card>
 
-        <Card className="flex flex-col justify-center bg-slate-50/50">
-          <h3 className="font-semibold text-slate-800 mb-4 flex items-center gap-2 text-sm">
-            <TrendingUp className="w-4 h-4 text-slate-400" />
+        <Card className="flex flex-col justify-center bg-slate-50/50 dark:bg-slate-800/40">
+          <h3 className="font-semibold text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2 text-sm">
+            <TrendingUp className="w-4 h-4 text-slate-400 dark:text-slate-500" />
             Desglose del Cálculo
           </h3>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-              <span className="text-slate-500">Alquiler Anual</span>
-              <span className="font-semibold text-slate-700">{formatCurrency(annualRent)}</span>
+            <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-700">
+              <span className="text-slate-500 dark:text-slate-400">Alquiler Anual</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-200">{formatCurrency(annualRent)}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-              <span className="text-slate-500">Precio Inmueble</span>
-              <span className="font-semibold text-slate-700">{formatCurrency(propertyValue)}</span>
+            <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-700">
+              <span className="text-slate-500 dark:text-slate-400">Precio Inmueble</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-200">{formatCurrency(propertyValue)}</span>
             </div>
-            <div className="pt-1 text-xs text-slate-500 font-mono text-center">
+            <div className="pt-1 text-xs text-slate-500 dark:text-slate-400 font-mono text-center">
               ({formatCurrency(annualRent)} / {formatCurrency(propertyValue)}) × 100
             </div>
           </div>
@@ -118,7 +118,7 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
       </div>
 
       <Card>
-        <h3 className="font-semibold text-slate-800 mb-4">Escala de Referencia</h3>
+        <h3 className="font-semibold text-slate-800 dark:text-slate-100 mb-4">Escala de Referencia</h3>
         <div className="relative pt-8 pb-2">
           {/* Barra de colores */}
           <div className="h-3 w-full rounded-none flex overflow-hidden">
@@ -129,12 +129,12 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
           </div>
           
           {/* Marcas */}
-          <div className="absolute top-2 left-[30%] -translate-x-1/2 text-xs font-semibold text-slate-500">3%</div>
-          <div className="absolute top-2 left-[50%] -translate-x-1/2 text-xs font-semibold text-slate-500">5%</div>
-          <div className="absolute top-2 left-[70%] -translate-x-1/2 text-xs font-semibold text-slate-500">7%</div>
+          <div className="absolute top-2 left-[30%] -translate-x-1/2 text-xs font-semibold text-slate-500 dark:text-slate-400">3%</div>
+          <div className="absolute top-2 left-[50%] -translate-x-1/2 text-xs font-semibold text-slate-500 dark:text-slate-400">5%</div>
+          <div className="absolute top-2 left-[70%] -translate-x-1/2 text-xs font-semibold text-slate-500 dark:text-slate-400">7%</div>
 
           {/* Etiquetas */}
-          <div className="flex justify-between mt-3 text-xs text-slate-500 font-medium px-2">
+          <div className="flex justify-between mt-3 text-xs text-slate-500 dark:text-slate-400 font-medium px-2">
             <div className="w-[30%] text-center">Caro</div>
             <div className="w-[20%] text-center">Normal</div>
             <div className="w-[20%] text-center">Interesante</div>
@@ -143,7 +143,7 @@ export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnaly
 
           {/* Indicador actual */}
           <div 
-            className="absolute top-7 w-4 h-4 bg-white border-2 border-slate-800 rounded-none shadow-md -translate-x-1/2 transition-all duration-500"
+            className="absolute top-7 w-4 h-4 bg-white dark:bg-slate-100 border-2 border-slate-800 dark:border-slate-300 rounded-none shadow-md -translate-x-1/2 transition-all duration-500"
             style={{ left: `${Math.min(Math.max(grossYield * 10, 0), 100)}%` }}
           ></div>
         </div>

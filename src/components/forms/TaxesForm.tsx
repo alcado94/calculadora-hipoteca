@@ -15,9 +15,9 @@ export function TaxesForm({ state, setters, handleNumberChange, derived, flatOnM
   return (
     <Card className="space-y-4" flatOnMobile={flatOnMobile}>
       {!flatOnMobile && (
-        <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
-          <Settings2 className="w-5 h-5 text-indigo-600" />
-          <h2 className="text-lg font-semibold">Impuestos y Gastos</h2>
+        <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-4">
+          <Settings2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Impuestos y Gastos</h2>
         </div>
       )}
 
@@ -94,13 +94,13 @@ export function TaxesForm({ state, setters, handleNumberChange, derived, flatOnM
         />
       </div>
       
-      <div className="bg-indigo-50 p-3 rounded-none flex justify-between items-center text-sm border border-indigo-100 mt-2">
-        <span className="text-indigo-900 font-medium">Total Gastos Iniciales:</span>
-        <span className="font-bold text-indigo-700">{formatCurrency(derived.totalExpenses)}</span>
+      <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-none flex justify-between items-center text-sm border border-indigo-100 dark:border-indigo-800 mt-2">
+        <span className="text-indigo-900 dark:text-indigo-300 font-medium">Total Gastos Iniciales:</span>
+        <span className="font-bold text-indigo-700 dark:text-indigo-400">{formatCurrency(derived.totalExpenses)}</span>
       </div>
-      <div className="bg-emerald-50 p-3 rounded-none flex justify-between items-center text-sm border border-emerald-100 mt-2">
-        <span className="text-emerald-900 font-medium">Gastos Recurrentes (Mes):</span>
-        <span className="font-bold text-emerald-700">{formatCurrency(derived.monthlyIbiAndCommunity)}</span>
+      <div className="bg-emerald-50 dark:bg-emerald-950/30 p-3 rounded-none flex justify-between items-center text-sm border border-emerald-100 dark:border-emerald-800 mt-2">
+        <span className="text-emerald-900 dark:text-emerald-300 font-medium">Gastos Recurrentes (Mes):</span>
+        <span className="font-bold text-emerald-700 dark:text-emerald-400">{formatCurrency(derived.monthlyIbiAndCommunity)}</span>
       </div>
     </Card>
   );

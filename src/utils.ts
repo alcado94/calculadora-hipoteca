@@ -13,7 +13,7 @@ export function formatCurrency(value: number) {
   }).format(value);
 }
 
-export function calculateMaxLoan(monthlyIncome: number, annualRate: number, years: number, maxRatio: number = 0.35) {
+export function calculateMaxLoan(monthlyIncome: number, annualRate: number, years: number, maxRatio: number = 0.30) {
   const maxMonthlyPayment = monthlyIncome * maxRatio;
   const monthlyRate = annualRate / 100 / 12;
   const numPayments = years * 12;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calculator } from 'lucide-react';
 import { Input, Select } from './ui';
+import { Footer } from './Footer';
 
 interface InitialFormProps {
   state: {
@@ -38,12 +39,12 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
     : 'Tipo de Interés Variable';
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
           <div className="flex items-center gap-3">
-            <div className="bg-indigo-600 p-2 rounded-none">
+            <div className="bg-indigo-600 dark:bg-indigo-500 p-2 rounded-none">
               <Calculator className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-semibold tracking-tight">Simulador de hipoteca</h1>
@@ -56,13 +57,13 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
         <div className="w-full max-w-2xl">
           {/* Title */}
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-slate-900 mb-2">Calcula tu hipoteca</h2>
+            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Calcula tu hipoteca</h2>
           </div>
 
-          <div className="bg-white border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8 space-y-8">
             {/* Sección 1: Datos del inmueble */}
             <div>
-              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-5">Datos del Inmueble</h3>
+              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">Datos del Inmueble</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="sm:col-span-2">
                   <Input
@@ -110,11 +111,11 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
             </div>
 
             {/* Divider */}
-            <div className="border-t border-slate-100" />
+            <div className="border-t border-slate-100 dark:border-slate-800" />
 
             {/* Sección 2: Perfil financiero */}
             <div>
-              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-5">Perfil Financiero</h3>
+              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-5">Perfil Financiero</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Input
                   label="Ahorro Actual"
@@ -146,12 +147,12 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
               </div>
             </div>
 
-            <p className="text-xs text-slate-500">Esta aplicación te ayuda a estimar tu hipoteca y analizar de forma orientativa tu situación financiera. Los datos que introduzcas no se recopilan ni se usan con fines comerciales; algunos valores se guardan en la URL solo para compartir o recuperar tu simulación.</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Esta aplicación te ayuda a estimar tu hipoteca y analizar de forma orientativa tu situación financiera. Los datos que introduzcas no se recopilan ni se usan con fines comerciales; algunos valores se guardan en la URL solo para compartir o recuperar tu simulación.</p>
 
             {/* Botón calcular */}
             <button
               onClick={onCalculate}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-none transition-colors text-sm tracking-wide"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-none transition-colors text-sm tracking-wide"
             >
               Calcular
             </button>
@@ -159,29 +160,7 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
         </div>
       </main>
 
-      <footer className="border-t border-slate-200/80">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-slate-600">
-          <p className="text-center sm:text-left">
-            Sitio desarrollado por{' '}
-            <a
-              href="https://github.com/alcado94/calculadora-hipoteca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-indigo-600 hover:text-indigo-700"
-            >
-              alcado94
-            </a>
-          </p>
-          <a
-            href="https://github.com/alcado94/calculadora-hipoteca"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
-          >
-            Ver codigo y reportar mejoras
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

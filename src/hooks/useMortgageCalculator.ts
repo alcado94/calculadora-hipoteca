@@ -79,7 +79,7 @@ export function useMortgageCalculator() {
   const affordabilityRatio = numMonthlyIncome > 0 ? (totalMonthlyPayment / numMonthlyIncome) * 100 : 0;
   const totalInterestPaid = (monthlyPayment * numYears * 12) - loanAmount;
   const totalCostOfProperty = numPropertyValue + totalExpenses + totalInterestPaid + (numIbiAndCommunity * numYears);
-  const maxLoanAmount = calculateMaxLoan(numMonthlyIncome, numInterestRate, numYears, 0.35);
+  const maxLoanAmount = calculateMaxLoan(numMonthlyIncome, numInterestRate, numYears, 0.30);
 
   // Chart Data
   const amortizationData = useMemo(() => {

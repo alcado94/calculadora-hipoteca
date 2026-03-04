@@ -13,9 +13,9 @@ export function FinancialProfileForm({ state, setters, handleNumberChange, flatO
   return (
     <Card className="space-y-6" flatOnMobile={flatOnMobile}>
       {!flatOnMobile && (
-        <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
-          <Wallet className="w-5 h-5 text-emerald-600" />
-          <h2 className="text-lg font-semibold">Perfil Financiero</h2>
+        <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-4">
+          <Wallet className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Perfil Financiero</h2>
         </div>
       )}
       

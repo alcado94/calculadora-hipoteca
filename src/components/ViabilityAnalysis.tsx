@@ -19,9 +19,9 @@ export function ViabilityAnalysis({
   if (monthlyIncome === 0) {
     return (
       <Card className="flex flex-col items-center justify-center py-16 text-center gap-3">
-        <Info className="w-8 h-8 text-slate-300" />
-        <p className="text-slate-500 text-sm max-w-xs">
-          Introduce tus <strong className="text-slate-700">ingresos netos mensuales</strong> en el perfil financiero para ver el análisis de viabilidad.
+        <Info className="w-8 h-8 text-slate-300 dark:text-slate-600" />
+        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xs">
+          Introduce tus <strong className="text-slate-700 dark:text-slate-200">ingresos netos mensuales</strong> en el perfil financiero para ver el análisis de viabilidad.
         </p>
       </Card>
     );
@@ -29,10 +29,10 @@ export function ViabilityAnalysis({
 
   const maxPropertyValue = maxLoanAmount + savings;
   const isViable = currentLoanAmount <= maxLoanAmount;
-  const maxMonthlyPayment = monthlyIncome * 0.35; // 35% effort ratio
+  const maxMonthlyPayment = monthlyIncome * 0.30; // 30% effort ratio
 
   return (
-    <Card className="bg-gradient-to-br from-slate-900 to-slate-800 text-white border-none">
+    <Card className="bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-700 text-white border-none">
       <div className="flex items-center gap-2 mb-6">
         <Target className="w-5 h-5 text-indigo-400" />
         <h3 className="text-lg font-semibold">Análisis de Viabilidad</h3>
@@ -43,7 +43,7 @@ export function ViabilityAnalysis({
           <div className="text-slate-400 text-sm mb-1">Préstamo Máximo Recomendado</div>
           <div className="text-3xl font-bold text-white">{formatCurrency(maxLoanAmount)}</div>
           <div className="text-slate-400 text-xs mt-1">
-            Basado en cuota máx. de {formatCurrency(maxMonthlyPayment)} (35% ingresos)
+            Basado en cuota máx. de {formatCurrency(maxMonthlyPayment)} (30% ingresos)
           </div>
         </div>
         
