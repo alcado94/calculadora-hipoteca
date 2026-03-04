@@ -1,8 +1,4 @@
-<div align="center">
-  <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
-# Calculadora Hipotecaria Espana
+# Simulador de hipoteca
 
 Aplicacion web para simular una hipoteca en Espana, analizar viabilidad financiera y comparar compra vs alquiler con metricas claras y visuales.
 
@@ -79,3 +75,4 @@ El repositorio incluye workflow de GitHub Actions en `.github/workflows/deploy.y
 
 - Actualmente no se requieren variables de entorno para ejecutar la app.
 - Moneda y formato orientados a Espana (`es-ES`, EUR).
+- Para SEO se mantienen referencias historicas como "calculadora hipotecaria" y "calculadora de hipoteca" en metadatos.

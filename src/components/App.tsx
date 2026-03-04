@@ -57,7 +57,7 @@ export default function App() {
             <div className="bg-indigo-600 p-2 rounded-none group-hover:bg-indigo-700 transition-colors">
               <Calculator className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-xl font-semibold tracking-tight hidden sm:block group-hover:text-indigo-600 transition-colors">Calculadora Hipotecaria España</h1>
+            <h1 className="text-xl font-semibold tracking-tight hidden sm:block group-hover:text-indigo-600 transition-colors">Simulador de hipoteca</h1>
           </button>
           
           <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-none border border-slate-200 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 transition-all">

@@ -46,7 +46,7 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
             <div className="bg-indigo-600 p-2 rounded-none">
               <Calculator className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-xl font-semibold tracking-tight">Calculadora Hipotecaria España</h1>
+            <h1 className="text-xl font-semibold tracking-tight">Simulador de hipoteca</h1>
           </div>
         </div>
       </header>
