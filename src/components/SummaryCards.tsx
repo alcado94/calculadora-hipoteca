@@ -23,6 +23,7 @@ interface SummaryCardsProps {
   totalInterestPaid: number;
   totalCostOfProperty: number;
   ltv: number;
+  monthlyIncome: number;
 }
 
 export function SummaryCards({ 
@@ -44,7 +45,8 @@ export function SummaryCards({
   equivalentRent,
   totalInterestPaid,
   totalCostOfProperty,
-  ltv
+  ltv,
+  monthlyIncome
 }: SummaryCardsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -53,6 +55,7 @@ export function SummaryCards({
         monthlyIbiAndCommunity={monthlyIbiAndCommunity}
         years={years}
         affordabilityRatio={affordabilityRatio}
+        monthlyIncome={monthlyIncome}
       />
       
       <RequiredSavingsCard 
@@ -60,12 +63,14 @@ export function SummaryCards({
         downPayment={downPayment}
         totalExpenses={totalExpenses}
         missingSavings={missingSavings}
+        savings={savings}
         monthlySavings={monthlySavings}
         monthsToSave={monthsToSave}
         yearsToSave={yearsToSave}
         isSavingsRealistic={isSavingsRealistic}
         freeIncome={freeIncome}
         equivalentRent={equivalentRent}
+        monthlyIncome={monthlyIncome}
       />
 
       <MortgageAmountCard 

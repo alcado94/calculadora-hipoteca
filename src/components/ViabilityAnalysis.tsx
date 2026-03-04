@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Target, TrendingUp, AlertTriangle, Info } from 'lucide-react';
 import { Card } from './ui';
 import { formatCurrency } from '../utils';
 
@@ -16,6 +16,17 @@ export function ViabilityAnalysis({
   currentLoanAmount,
   savings
 }: ViabilityAnalysisProps) {
+  if (monthlyIncome === 0) {
+    return (
+      <Card className="flex flex-col items-center justify-center py-16 text-center gap-3">
+        <Info className="w-8 h-8 text-slate-300" />
+        <p className="text-slate-500 text-sm max-w-xs">
+          Introduce tus <strong className="text-slate-700">ingresos netos mensuales</strong> en el perfil financiero para ver el análisis de viabilidad.
+        </p>
+      </Card>
+    );
+  }
+
   const maxPropertyValue = maxLoanAmount + savings;
   const isViable = currentLoanAmount <= maxLoanAmount;
   const maxMonthlyPayment = monthlyIncome * 0.35; // 35% effort ratio

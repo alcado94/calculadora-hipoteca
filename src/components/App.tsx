@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, Pencil } from 'lucide-react';
 import { cn } from '../utils';
-import { AmortizationChart, StressTestChart, CostBreakdownChart, InterestScenariosChart } from './charts';
+import { AmortizationChart } from './charts';
 import { SummaryCards } from './SummaryCards';
 import { AmortizationTable } from './AmortizationTable';
 import { ViabilityAnalysis } from './ViabilityAnalysis';
@@ -14,7 +14,7 @@ import { InitialForm } from './InitialForm';
 
 export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
-  const [activeTab, setActiveTab] = useState<'charts' | 'table' | 'viability' | 'rent-vs-buy'>('table');
+  const [activeTab, setActiveTab] = useState<'table' | 'viability' | 'rent-vs-buy'>('table');
   const [hash, setHash] = useState('');
 
   useEffect(() => {
@@ -116,6 +116,7 @@ export default function App() {
               totalInterestPaid={derived.totalInterestPaid}
               totalCostOfProperty={derived.totalCostOfProperty}
               ltv={derived.numLtv}
+              monthlyIncome={derived.numMonthlyIncome}
             />
 
             {/* Tabs Navigation */}
@@ -154,17 +155,7 @@ export default function App() {
                 >
                   Comprar vs Alquilar
                 </button>
-                <button
-                  onClick={() => setActiveTab('charts')}
-                  className={cn(
-                    "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
-                    activeTab === 'charts'
-                      ? "border-indigo-500 text-indigo-600"
-                      : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
-                  )}
-                >
-                  Gráficos
-                </button>
+
               </nav>
             </div>
 
@@ -195,13 +186,7 @@ export default function App() {
                         monthlyRent={state.equivalentRent}
                       />
                     );
-                  case 'charts':
-                    return (
-                      <div className="grid grid-cols-1 gap-6">
-                        <StressTestChart data={charts.stressTestData} />
-                        <InterestScenariosChart data={charts.scenarioData} />
-                      </div>
-                    );
+
                   default:
                     return null;
                 }

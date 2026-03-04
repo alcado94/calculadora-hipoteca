@@ -7,13 +7,15 @@ interface MortgageQuotaCardProps {
   monthlyIbiAndCommunity: number;
   years: number;
   affordabilityRatio: number;
+  monthlyIncome: number;
 }
 
 export function MortgageQuotaCard({
   monthlyMortgage,
   monthlyIbiAndCommunity,
   years,
-  affordabilityRatio
+  affordabilityRatio,
+  monthlyIncome
 }: MortgageQuotaCardProps) {
   const totalMonthly = monthlyMortgage + monthlyIbiAndCommunity;
 
@@ -36,16 +38,18 @@ export function MortgageQuotaCard({
       <div className="flex justify-between items-start mb-1">
         <div className="text-indigo-100 text-sm font-medium">Cuota Hipoteca</div>
         <div className="flex gap-2">
-          <div className="relative group cursor-help">
-            <div className={`text-xs px-2 py-0.5 rounded-none ${effortColor} border border-white/10`}>
-              Esfuerzo: {affordabilityRatio.toFixed(1)}%
+          {monthlyIncome > 0 && (
+            <div className="relative group cursor-help">
+              <div className={`text-xs px-2 py-0.5 rounded-none ${effortColor} border border-white/10`}>
+                Esfuerzo: {affordabilityRatio.toFixed(1)}%
+              </div>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-800 text-white text-xs rounded-none shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center">
+                <span className="font-semibold block mb-0.5">{effortText}</span>
+                {tooltipText}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+              </div>
             </div>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-800 text-white text-xs rounded-none shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center">
-              <span className="font-semibold block mb-0.5">{effortText}</span>
-              {tooltipText}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
-            </div>
-          </div>
+          )}
           <div className="text-indigo-200 text-xs bg-indigo-500/40 px-2 py-0.5 rounded-none">{years} años</div>
         </div>
       </div>

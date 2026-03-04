@@ -10,6 +10,18 @@ interface RentVsBuyAnalysisProps {
 
 export function RentVsBuyAnalysis({ propertyValue, monthlyRent }: RentVsBuyAnalysisProps) {
   const numMonthlyRent = Number(monthlyRent) || 0;
+
+  if (numMonthlyRent === 0) {
+    return (
+      <Card className="flex flex-col items-center justify-center py-16 text-center gap-3">
+        <Info className="w-8 h-8 text-slate-300" />
+        <p className="text-slate-500 text-sm max-w-xs">
+          Introduce el <strong className="text-slate-700">alquiler actual o estimado</strong> en el perfil financiero para calcular la rentabilidad bruta y el análisis de comprar vs. alquilar.
+        </p>
+      </Card>
+    );
+  }
+
   const annualRent = numMonthlyRent * 12;
   const grossYield = propertyValue > 0 ? (annualRent / propertyValue) * 100 : 0;
 
