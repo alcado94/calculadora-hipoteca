@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Calculator, Pencil } from 'lucide-react';
-import { cn } from './utils';
-import { AmortizationChart, StressTestChart, CostBreakdownChart, InterestScenariosChart } from './components/charts';
-import { SummaryCards } from './components/SummaryCards';
-import { AmortizationTable } from './components/AmortizationTable';
-import { ViabilityAnalysis } from './components/ViabilityAnalysis';
-import { RentVsBuyAnalysis } from './components/RentVsBuyAnalysis';
-import { useMortgageCalculator } from './hooks/useMortgageCalculator';
-import { PropertyForm } from './components/forms/PropertyForm';
-import { FinancialProfileForm } from './components/forms/FinancialProfileForm';
-import { TaxesForm } from './components/forms/TaxesForm';
+import { cn } from '../utils';
+import { AmortizationChart, StressTestChart, CostBreakdownChart, InterestScenariosChart } from './charts';
+import { SummaryCards } from './SummaryCards';
+import { AmortizationTable } from './AmortizationTable';
+import { ViabilityAnalysis } from './ViabilityAnalysis';
+import { RentVsBuyAnalysis } from './RentVsBuyAnalysis';
+import { useMortgageCalculator } from '../hooks/useMortgageCalculator';
+import { PropertyForm } from './forms/PropertyForm';
+import { FinancialProfileForm } from './forms/FinancialProfileForm';
+import { TaxesForm } from './forms/TaxesForm';
 
 export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
