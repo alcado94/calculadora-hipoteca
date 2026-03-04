@@ -5,8 +5,8 @@ interface Props {
 }
 
 const {
-  title = 'Simulador de hipoteca | Calculadora hipotecaria',
-  description = 'Simulador de hipoteca para calcular cuotas, analizar viabilidad y comparar alquiler vs compra. Esta calculadora hipotecaria incluye ITP, IVA, AJD, notaría, registro y esfuerzo financiero en España.',
+  title = 'Calculadora Hipotecaria España | Simula tu Hipoteca Gratis',
+  description = 'Calcula tu hipoteca en España: cuotas, ITP/IVA/AJD, notaría y registro, esfuerzo financiero y comparativa alquiler vs compra. Gratis, sin registro.',
 } = Astro.props;
 
 const canonicalURL = Astro.site
@@ -14,8 +14,8 @@ const canonicalURL = Astro.site
   : Astro.url;
 
 const ogImage = Astro.site
-  ? new URL('/calculadora-hipoteca/og-image.svg', Astro.site).href
-  : '/calculadora-hipoteca/og-image.svg';
+  ? new URL('/calculadora-hipoteca/og-image.png', Astro.site).href
+  : '/calculadora-hipoteca/og-image.png';
 
 const webApplicationSchema = {
   '@context': 'https://schema.org',
@@ -55,6 +55,7 @@ const webApplicationSchema = {
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Calculadora Hipotecaria España" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
