@@ -37,6 +37,19 @@ export function RequiredSavingsCard({
       <div className="text-2xl font-bold text-slate-900">{formatCurrency(totalInitialCash)}</div>
       
       <div className="mt-auto pt-4 flex-1 flex flex-col justify-end">
+        <div className="mb-2 space-y-2">
+          {monthlyIncome > 0 && !isSavingsRealistic && monthlySavings > 0 && (
+            <div className="bg-red-50 text-red-600 p-2 rounded-none text-xs border border-red-100">
+              ⚠️ <strong>Poco realista:</strong> Tu alquiler ({formatCurrency(equivalentRent)}) + ahorro ({formatCurrency(monthlySavings)}) superan tus ingresos.
+            </div>
+          )}
+          {monthlyIncome > 0 && isSavingsRealistic && monthlySavings > 0 && freeIncome < 400 && (
+            <div className="bg-amber-50 text-amber-700 p-2 rounded-none text-xs border border-amber-100">
+              ⚠️ <strong>Ajustado:</strong> Te quedan {formatCurrency(freeIncome)}/mes para otros gastos de vida.
+            </div>
+          )}
+        </div>
+
         <div className="bg-slate-50 p-2.5 rounded-none border border-slate-100 text-xs">
           <div className="flex justify-between items-center mb-1.5">
             <span className="text-slate-500">Entrada a aportar:</span>
@@ -64,19 +77,6 @@ export function RequiredSavingsCard({
           ) : (
             <div className="border-t border-slate-200 pt-1.5 mt-1.5 text-slate-400 italic">
               Introduce tu ahorro actual para ver cuánto te falta
-            </div>
-          )}
-        </div>
-
-        <div className="mt-2 space-y-2">
-          {monthlyIncome > 0 && !isSavingsRealistic && monthlySavings > 0 && (
-            <div className="bg-red-50 text-red-600 p-2 rounded-none text-xs border border-red-100">
-              ⚠️ <strong>Poco realista:</strong> Tu alquiler ({formatCurrency(equivalentRent)}) + ahorro ({formatCurrency(monthlySavings)}) superan tus ingresos.
-            </div>
-          )}
-          {monthlyIncome > 0 && isSavingsRealistic && monthlySavings > 0 && freeIncome < 400 && (
-            <div className="bg-amber-50 text-amber-700 p-2 rounded-none text-xs border border-amber-100">
-              ⚠️ <strong>Ajustado:</strong> Te quedan {formatCurrency(freeIncome)}/mes para otros gastos de vida.
             </div>
           )}
         </div>

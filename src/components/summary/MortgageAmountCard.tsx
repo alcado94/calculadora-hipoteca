@@ -51,7 +51,7 @@ export function MortgageAmountCard({
               <div className="bg-emerald-500 h-full" style={{ width: `${((monthlyIbiAndCommunity * 12 * years) / totalCostOfProperty) * 100}%` }}></div>
             </div>
             
-            <div className="grid grid-cols-2 gap-x-1 gap-y-1 text-[10px] text-slate-500">
+            <div className="grid grid-cols-2 gap-x-1 gap-y-1 text-xs text-slate-500">
               <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-none bg-blue-500"></div>Inmueble ({(((loanAmount + downPayment) / totalCostOfProperty) * 100).toFixed(0)}%)</div>
               <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-none bg-amber-500"></div>Intereses ({((totalInterestPaid / totalCostOfProperty) * 100).toFixed(0)}%)</div>
               <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-none bg-red-500"></div>Impuestos ({((totalExpenses / totalCostOfProperty) * 100).toFixed(0)}%)</div>

@@ -55,7 +55,7 @@ export function MortgageQuotaCard({
       </div>
       <div className="text-3xl font-bold mt-1">{formatCurrency(monthlyMortgage)}</div>
       
-      <div className="text-indigo-200 text-xs mt-auto pt-4">
+      <div className="text-indigo-200 text-xs mt-auto pt-4 flex-1 flex flex-col justify-end">
         <div className="bg-indigo-700/50 p-2.5 rounded-none">
           <div className="flex justify-between items-center mb-1.5">
             <span>Hipoteca:</span>
