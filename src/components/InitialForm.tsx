@@ -57,7 +57,6 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
           {/* Title */}
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-slate-900 mb-2">Calcula tu hipoteca</h2>
-            <p className="text-sm text-slate-500">Introduce los datos del inmueble y tu perfil financiero para obtener un análisis completo.</p>
           </div>
 
           <div className="bg-white border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8">
@@ -146,6 +145,8 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
                 />
               </div>
             </div>
+
+            <p className="text-xs text-slate-500">Esta aplicación te ayuda a estimar tu hipoteca y analizar de forma orientativa tu situación financiera. Los datos que introduzcas no se recopilan ni se usan con fines comerciales; algunos valores se guardan en la URL solo para compartir o recuperar tu simulación.</p>
 
             {/* Botón calcular */}
             <button
