@@ -36,10 +36,10 @@ export function PropertyForm({ state, setters, handleNumberChange, flatOnMobile 
         />
 
         <ListInput 
-          label="Plazo" 
+          label="Plazo en años" 
           value={state.years} 
           onChange={handleNumberChange(setters.setYears)} 
-          suffix="años"
+          suffix=" "
           max={40}
         />
 
