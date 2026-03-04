@@ -64,7 +64,8 @@ export function PropertyForm({ state, setters, handleNumberChange, flatOnMobile 
         />
 
         <ListInput 
-          label="Inflación Anual Est." 
+          label="Inflación Anual Est."
+          helpText="La estimacion por defecto corresponde a la inflacion anual del ultimo año en Espana."
           value={state.inflationRate} 
           onChange={handleNumberChange(setters.setInflationRate)} 
           suffix="%"

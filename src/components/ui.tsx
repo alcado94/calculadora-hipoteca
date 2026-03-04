@@ -53,10 +53,21 @@ export function Select({ label, value, onChange, options }: any) {
   );
 }
 
-export function ListInput({ label, value, onChange, type = "number", min = 0, max, step, suffix, disabled }: any) {
+export function ListInput({ label, value, onChange, type = "number", min = 0, max, step, suffix, disabled, helpText }: any) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 gap-1.5 sm:gap-0">
-      <span className="text-sm text-slate-600">{label}</span>
+      <div className="flex items-center gap-1.5">
+        <span className="text-sm text-slate-600">{label}</span>
+        {helpText && (
+          <div className="relative group cursor-help">
+            <span className="inline-flex h-4 w-4 items-center justify-center border border-slate-300 text-[10px] font-semibold text-slate-500">i</span>
+            <div className="absolute bottom-full left-1/2 z-10 mb-2 w-56 -translate-x-1/2 bg-slate-800 p-2 text-center text-xs text-white opacity-0 shadow-lg transition-opacity pointer-events-none group-hover:opacity-100">
+              {helpText}
+              <div className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="flex items-center gap-1.5">
         <input
           type={type}
