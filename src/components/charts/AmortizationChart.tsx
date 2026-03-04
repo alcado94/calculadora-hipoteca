@@ -4,6 +4,37 @@ import { Card } from '../ui';
 import { formatCurrency } from '../../utils';
 
 export function AmortizationChart({ data, className }: { data: any[], className?: string }) {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const renderMobileLegend = (props: any) => {
+    const { payload } = props;
+    return (
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px', marginTop: '12px', padding: '0 4px' }}>
+        {payload.map((entry: any, index: number) => (
+          <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{
+              display: 'inline-block',
+              width: 14,
+              height: 14,
+              borderRadius: 3,
+              backgroundColor: entry.color,
+              flexShrink: 0,
+              ...(entry.payload?.strokeDasharray ? { background: 'none', border: `2px dashed ${entry.color}`, borderRadius: 0 } : {})
+            }} />
+            <span style={{ fontSize: 11, color: '#475569', lineHeight: 1.3 }}>{entry.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <Card className={className}>
       <h3 className="text-lg font-semibold mb-6">Evolución de la Deuda y Pagos</h3>
@@ -43,7 +74,11 @@ export function AmortizationChart({ data, className }: { data: any[], className?
               formatter={(value: number) => formatCurrency(value)}
               labelFormatter={(label) => `Año ${label}`}
             />
-            <Legend verticalAlign="top" height={36}/>
+            <Legend
+              verticalAlign={isMobile ? 'bottom' : 'top'}
+              height={isMobile ? 72 : 36}
+              content={isMobile ? renderMobileLegend : undefined}
+            />
             <Area 
               yAxisId="left"
               type="monotone" 
