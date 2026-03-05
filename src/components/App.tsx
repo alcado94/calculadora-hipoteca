@@ -13,28 +13,7 @@ import { TaxesForm } from "./forms/TaxesForm";
 import { InitialForm } from "./InitialForm";
 import { ThemeProvider } from "./ThemeProvider";
 import { Footer } from "./Footer";
-
-const URL_PARAM_KEYS = {
-  budgetName: "bn",
-  propertyValue: "pv",
-  ltv: "ltv",
-  savings: "sv",
-  monthlySavings: "ms",
-  years: "y",
-  mortgageType: "mt",
-  interestRate: "ir",
-  inflationRate: "inf",
-  monthlyIncome: "mi",
-  equivalentRent: "er",
-  propertyType: "pt",
-  itpRate: "itp",
-  ivaRate: "iva",
-  ajdRate: "ajd",
-  ibiAndCommunity: "ibi",
-} as const;
-
-const MORTGAGE_TYPES = new Set(["fixed", "variable"]);
-const PROPERTY_TYPES = new Set(["second-hand", "new"]);
+import { URL_PARAM_KEYS, MORTGAGE_TYPES, PROPERTY_TYPES } from "../constants/url";
 
 // SSR-safe browser helpers
 const isBrowser = typeof window !== "undefined";
@@ -43,6 +22,13 @@ const getLocationPathname = () => (isBrowser ? window.location.pathname : "/");
 const replaceState = (url: string) => {
   if (isBrowser) window.history.replaceState({}, "", url);
 };
+
+// Extend Window type for SSG shell callback
+declare global {
+  interface Window {
+    __appMounted?: () => void;
+  }
+}
 
 function isValidNonNegativeNumber(value: string) {
   if (value === "") return true;
@@ -154,8 +140,8 @@ export default function App() {
 
   useEffect(() => {
     // Notify index.astro to hide the SSR shell now that React has mounted
-    if (isBrowser && typeof (window as any).__appMounted === "function") {
-      (window as any).__appMounted();
+    if (isBrowser && typeof window.__appMounted === "function") {
+      window.__appMounted();
     }
 
     hydrateStateFromUrl();

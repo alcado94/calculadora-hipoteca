@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import type { Theme } from "../types/theme";
 
-export type Theme = "light" | "dark";
+export type { Theme } from "../types/theme";
 
 const THEME_STORAGE_KEY = "theme";
 

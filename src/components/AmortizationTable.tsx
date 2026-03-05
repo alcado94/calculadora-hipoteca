@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Card } from "./ui";
 import { formatCurrency } from "../utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { AmortizationRow } from "../types/charts";
+import { AMORTIZATION_TABLE_PAGE_SIZE } from "../constants/ui";
 
 interface AmortizationTableProps {
-  data: any[];
+  data: AmortizationRow[];
 }
 
 export function AmortizationTable({ data }: AmortizationTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = AMORTIZATION_TABLE_PAGE_SIZE;
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;

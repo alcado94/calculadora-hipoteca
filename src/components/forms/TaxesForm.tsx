@@ -2,12 +2,19 @@ import React from "react";
 import { Settings2 } from "lucide-react";
 import { Card, ListInput, ListSelect } from "../ui";
 import { formatCurrency } from "../../utils";
+import type {
+  MortgageState,
+  MortgageSetters,
+  HandleNumberChange,
+  MortgageDerived,
+} from "../../types/mortgage";
+import { PROPERTY_TYPE_OPTIONS } from "../../constants/ui";
 
 interface TaxesFormProps {
-  state: any;
-  setters: any;
-  handleNumberChange: any;
-  derived: any;
+  state: MortgageState;
+  setters: MortgageSetters;
+  handleNumberChange: HandleNumberChange;
+  derived: MortgageDerived;
   flatOnMobile?: boolean;
 }
 
@@ -33,11 +40,8 @@ export function TaxesForm({
         <ListSelect
           label="Tipo de Inmueble"
           value={state.propertyType}
-          onChange={(e: any) => setters.setPropertyType(e.target.value)}
-          options={[
-            { value: "second-hand", label: "Segunda Mano (ITP)" },
-            { value: "new", label: "Obra Nueva (IVA + AJD)" },
-          ]}
+          onChange={(e) => setters.setPropertyType(e.target.value)}
+          options={PROPERTY_TYPE_OPTIONS}
         />
         {state.propertyType === "second-hand" ? (
           <ListInput

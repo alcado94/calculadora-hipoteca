@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import {
   Area,
   XAxis,
@@ -10,11 +10,19 @@ import {
   Line,
   ComposedChart,
 } from "recharts";
+
 import { Card } from "../ui";
 import { formatCurrency } from "../../utils";
 import { useThemeContext } from "../ThemeProvider";
+import type { AmortizationRow } from "../../types/charts";
 
-export function AmortizationChart({ data, className }: { data: any[]; className?: string }) {
+export function AmortizationChart({
+  data,
+  className,
+}: {
+  data: AmortizationRow[];
+  className?: string;
+}) {
   const [isMobile, setIsMobile] = React.useState(false);
   const { theme } = useThemeContext();
   const isDark = theme === "dark";
@@ -39,8 +47,12 @@ export function AmortizationChart({ data, className }: { data: any[]; className?
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderMobileLegend = (props: any) => {
-    const { payload } = props;
+    const payload = props.payload as
+      | Array<{ color?: string; value?: string; payload?: { strokeDasharray?: string } }>
+      | undefined;
+    if (!payload) return null;
     return (
       <div
         style={{
@@ -51,7 +63,7 @@ export function AmortizationChart({ data, className }: { data: any[]; className?
           padding: "0 4px",
         }}
       >
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry, index: number) => (
           <div key={index} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <span
               style={{

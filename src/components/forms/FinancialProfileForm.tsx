@@ -1,11 +1,12 @@
 import React from "react";
 import { Wallet } from "lucide-react";
 import { Card, ListInput } from "../ui";
+import type { MortgageState, MortgageSetters, HandleNumberChange } from "../../types/mortgage";
 
 interface FinancialProfileFormProps {
-  state: any;
-  setters: any;
-  handleNumberChange: any;
+  state: MortgageState;
+  setters: MortgageSetters;
+  handleNumberChange: HandleNumberChange;
   flatOnMobile?: boolean;
 }
 

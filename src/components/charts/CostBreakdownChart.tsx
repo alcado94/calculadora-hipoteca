@@ -3,13 +3,14 @@ import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recha
 import { Card } from "../ui";
 import { formatCurrency } from "../../utils";
 import { useThemeContext } from "../ThemeProvider";
+import type { PieChartEntry } from "../../types/charts";
 
 export function CostBreakdownChart({
   data,
   totalCost,
   className,
 }: {
-  data: any[];
+  data: PieChartEntry[];
   totalCost: number;
   className?: string;
 }) {

@@ -2,38 +2,37 @@ import React from "react";
 import { Calculator } from "lucide-react";
 import { Input, Select } from "./ui";
 import { Footer } from "./Footer";
+import type { MortgageState, MortgageSetters, HandleNumberChange } from "../types/mortgage";
+import { MORTGAGE_TYPE_OPTIONS } from "../constants/ui";
 
 interface InitialFormProps {
-  state: {
-    propertyValue: string | number;
-    ltv: string | number;
-    years: string | number;
-    mortgageType: string;
-    interestRate: string | number;
-    savings: string | number;
-    monthlyIncome: string | number;
-    monthlySavings: string | number;
-  };
-  setters: {
-    setPropertyValue: (v: any) => void;
-    setLtv: (v: any) => void;
-    setYears: (v: any) => void;
-    setMortgageType: (v: any) => void;
-    setInterestRate: (v: any) => void;
-    setSavings: (v: any) => void;
-    setMonthlyIncome: (v: any) => void;
-    setMonthlySavings: (v: any) => void;
-  };
-  handleNumberChange: (setter: any) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  state: Pick<
+    MortgageState,
+    | "propertyValue"
+    | "ltv"
+    | "years"
+    | "mortgageType"
+    | "interestRate"
+    | "savings"
+    | "monthlyIncome"
+    | "monthlySavings"
+  >;
+  setters: Pick<
+    MortgageSetters,
+    | "setPropertyValue"
+    | "setLtv"
+    | "setYears"
+    | "setMortgageType"
+    | "setInterestRate"
+    | "setSavings"
+    | "setMonthlyIncome"
+    | "setMonthlySavings"
+  >;
+  handleNumberChange: HandleNumberChange;
   onCalculate: () => void;
 }
 
 export function InitialForm({ state, setters, handleNumberChange, onCalculate }: InitialFormProps) {
-  const mortgageTypeOptions = [
-    { value: "fixed", label: "Fija" },
-    { value: "variable", label: "Variable" },
-  ];
-
   const interestRateLabel =
     state.mortgageType === "fixed" ? "Tipo de Interés Fijo" : "Tipo de Interés Variable";
 
@@ -99,10 +98,8 @@ export function InitialForm({ state, setters, handleNumberChange, onCalculate }:
                 <Select
                   label="Tipo de Hipoteca"
                   value={state.mortgageType}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    setters.setMortgageType(e.target.value)
-                  }
-                  options={mortgageTypeOptions}
+                  onChange={(e) => setters.setMortgageType(e.target.value)}
+                  options={MORTGAGE_TYPE_OPTIONS}
                 />
                 <Input
                   label={interestRateLabel}

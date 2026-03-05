@@ -1,5 +1,12 @@
 import React from "react";
 import { cn } from "../utils";
+import type {
+  InputProps,
+  SelectProps,
+  ListInputProps,
+  ListSelectProps,
+  CardProps,
+} from "../types/ui";
 
 export function Input({
   label,
@@ -13,7 +20,7 @@ export function Input({
   prefix,
   disabled,
   placeholder,
-}: any) {
+}: InputProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</label>
@@ -51,7 +58,7 @@ export function Input({
   );
 }
 
-export function Select({ label, value, onChange, options }: any) {
+export function Select({ label, value, onChange, options }: SelectProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</label>
@@ -60,7 +67,7 @@ export function Select({ label, value, onChange, options }: any) {
         onChange={onChange}
         className="w-full rounded-none border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-3 sm:py-2 text-base sm:text-sm text-slate-900 dark:text-slate-100 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400"
       >
-        {options.map((opt: any) => (
+        {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
@@ -81,7 +88,7 @@ export function ListInput({
   suffix,
   disabled,
   helpText,
-}: any) {
+}: ListInputProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 gap-1.5 sm:gap-0">
       <div className="flex items-center gap-1.5">
@@ -124,7 +131,7 @@ export function ListInput({
   );
 }
 
-export function ListSelect({ label, value, onChange, options }: any) {
+export function ListSelect({ label, value, onChange, options }: ListSelectProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 gap-1.5 sm:gap-0">
       <span className="text-sm text-slate-600 dark:text-slate-400">{label}</span>
@@ -134,7 +141,7 @@ export function ListSelect({ label, value, onChange, options }: any) {
           onChange={onChange}
           className="w-full sm:w-48 text-right rounded-none border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 sm:px-2 py-2.5 sm:py-1 text-base sm:text-sm font-medium text-slate-900 dark:text-slate-100 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400"
         >
-          {options.map((opt: any) => (
+          {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
               {opt.label}
             </option>
@@ -146,7 +153,7 @@ export function ListSelect({ label, value, onChange, options }: any) {
   );
 }
 
-export function Card({ children, className = "", flatOnMobile = false }: any) {
+export function Card({ children, className = "", flatOnMobile = false }: CardProps) {
   return (
     <div
       className={cn(

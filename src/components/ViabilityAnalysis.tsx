@@ -2,6 +2,7 @@ import React from "react";
 import { Target, TrendingUp, AlertTriangle, Info } from "lucide-react";
 import { Card } from "./ui";
 import { formatCurrency } from "../utils";
+import { MAX_EFFORT_RATIO } from "../constants/mortgage";
 
 interface ViabilityAnalysisProps {
   monthlyIncome: number;
@@ -31,7 +32,8 @@ export function ViabilityAnalysis({
 
   const maxPropertyValue = maxLoanAmount + savings;
   const isViable = currentLoanAmount <= maxLoanAmount;
-  const maxMonthlyPayment = monthlyIncome * 0.3; // 30% effort ratio
+  const maxMonthlyPayment = monthlyIncome * MAX_EFFORT_RATIO;
+  const effortPercent = Math.round(MAX_EFFORT_RATIO * 100);
 
   return (
     <Card className="bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-700 text-white border-none">
@@ -45,7 +47,7 @@ export function ViabilityAnalysis({
           <div className="text-slate-400 text-sm mb-1">Préstamo Máximo Recomendado</div>
           <div className="text-3xl font-bold text-white">{formatCurrency(maxLoanAmount)}</div>
           <div className="text-slate-400 text-xs mt-1">
-            Basado en cuota máx. de {formatCurrency(maxMonthlyPayment)} (30% ingresos)
+            Basado en cuota máx. de {formatCurrency(maxMonthlyPayment)} ({effortPercent}% ingresos)
           </div>
         </div>
 

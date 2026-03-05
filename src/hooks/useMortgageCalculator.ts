@@ -1,12 +1,19 @@
 import React, { useState, useMemo } from "react";
+import { calculateMortgage, generateAmortizationSchedule, calculateMaxLoan } from "../utils";
 import {
-  calculateMortgage,
-  generateAmortizationSchedule,
-  calculateMaxLoan,
   MORTGAGE_DEFAULTS,
-} from "../utils";
+  NOTARY_FEE_RATE,
+  NOTARY_FEE_BASE,
+  REGISTRY_FEE_RATE,
+  REGISTRY_FEE_BASE,
+  GESTORIA_FEE,
+  TASACION_FEE_RATE,
+  TASACION_FEE_MIN,
+  MAX_EFFORT_RATIO,
+} from "../constants/mortgage";
+import type { HandleNumberChange } from "../types/mortgage";
 
-export { MORTGAGE_DEFAULTS } from "../utils";
+export { MORTGAGE_DEFAULTS } from "../constants/mortgage";
 
 export function useMortgageCalculator() {
   // Main Inputs
@@ -41,7 +48,7 @@ export function useMortgageCalculator() {
     MORTGAGE_DEFAULTS.ibiAndCommunity
   );
 
-  const handleNumberChange =
+  const handleNumberChange: HandleNumberChange =
     (setter: React.Dispatch<React.SetStateAction<string | number>>) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
@@ -72,10 +79,12 @@ export function useMortgageCalculator() {
   const monthlyIbiAndCommunity = numIbiAndCommunity / 12;
 
   // Auto-calculated fees based on property value (Standard Spanish estimations)
-  const numNotaryFee = Math.round(numPropertyValue * 0.003 + 300); // ~0.3% + base
-  const numRegistryFee = Math.round(numPropertyValue * 0.0015 + 150); // ~0.15% + base
-  const numGestoriaFee = 400; // Usually fixed
-  const numTasacionFee = Math.round(Math.max(300, numPropertyValue * 0.001)); // Min 300 or 0.1%
+  const numNotaryFee = Math.round(numPropertyValue * NOTARY_FEE_RATE + NOTARY_FEE_BASE);
+  const numRegistryFee = Math.round(numPropertyValue * REGISTRY_FEE_RATE + REGISTRY_FEE_BASE);
+  const numGestoriaFee = GESTORIA_FEE;
+  const numTasacionFee = Math.round(
+    Math.max(TASACION_FEE_MIN, numPropertyValue * TASACION_FEE_RATE)
+  );
 
   const loanAmount = Math.max(0, numPropertyValue * (numLtv / 100));
   const downPayment = Math.max(0, numPropertyValue - loanAmount);
@@ -103,7 +112,12 @@ export function useMortgageCalculator() {
   const totalInterestPaid = monthlyPayment * numYears * 12 - loanAmount;
   const totalCostOfProperty =
     numPropertyValue + totalExpenses + totalInterestPaid + numIbiAndCommunity * numYears;
-  const maxLoanAmount = calculateMaxLoan(numMonthlyIncome, numInterestRate, numYears, 0.3);
+  const maxLoanAmount = calculateMaxLoan(
+    numMonthlyIncome,
+    numInterestRate,
+    numYears,
+    MAX_EFFORT_RATIO
+  );
 
   // Chart Data
   const amortizationData = useMemo(() => {

@@ -12,8 +12,15 @@ import {
 import { Card } from "../ui";
 import { formatCurrency } from "../../utils";
 import { useThemeContext } from "../ThemeProvider";
+import type { ScenarioEntry } from "../../types/charts";
 
-export function InterestScenariosChart({ data, className }: { data: any[]; className?: string }) {
+export function InterestScenariosChart({
+  data,
+  className,
+}: {
+  data: ScenarioEntry[];
+  className?: string;
+}) {
   const { theme } = useThemeContext();
   const isDark = theme === "dark";
   const gridColor = isDark ? "#334155" : "#e2e8f0";

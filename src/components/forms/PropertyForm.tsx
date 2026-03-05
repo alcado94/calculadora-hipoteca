@@ -1,11 +1,13 @@
 import React from "react";
 import { Home } from "lucide-react";
 import { Card, ListInput, ListSelect } from "../ui";
+import type { MortgageState, MortgageSetters, HandleNumberChange } from "../../types/mortgage";
+import { MORTGAGE_TYPE_OPTIONS } from "../../constants/ui";
 
 interface PropertyFormProps {
-  state: any;
-  setters: any;
-  handleNumberChange: any;
+  state: MortgageState;
+  setters: MortgageSetters;
+  handleNumberChange: HandleNumberChange;
   flatOnMobile?: boolean;
 }
 
@@ -55,11 +57,8 @@ export function PropertyForm({
         <ListSelect
           label="Tipo de Hipoteca"
           value={state.mortgageType}
-          onChange={(e: any) => setters.setMortgageType(e.target.value)}
-          options={[
-            { value: "fixed", label: "Fija" },
-            { value: "variable", label: "Variable" },
-          ]}
+          onChange={(e) => setters.setMortgageType(e.target.value)}
+          options={MORTGAGE_TYPE_OPTIONS}
         />
 
         <ListInput

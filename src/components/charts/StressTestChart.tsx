@@ -11,8 +11,15 @@ import {
 import { Card } from "../ui";
 import { formatCurrency } from "../../utils";
 import { useThemeContext } from "../ThemeProvider";
+import type { StressTestEntry } from "../../types/charts";
 
-export function StressTestChart({ data, className }: { data: any[]; className?: string }) {
+export function StressTestChart({
+  data,
+  className,
+}: {
+  data: StressTestEntry[];
+  className?: string;
+}) {
   const { theme } = useThemeContext();
   const isDark = theme === "dark";
   const gridColor = isDark ? "#334155" : "#e2e8f0";

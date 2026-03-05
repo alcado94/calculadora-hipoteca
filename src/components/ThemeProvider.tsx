@@ -1,12 +1,8 @@
 import React, { createContext, useContext } from "react";
-import { useTheme, type Theme } from "../hooks/useTheme";
+import { useTheme } from "../hooks/useTheme";
+import type { ThemeContextValue } from "../types/theme";
 
-interface ThemeContextValue {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
-  hasUserPreference: boolean;
-}
+export type { Theme } from "../types/theme";
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
