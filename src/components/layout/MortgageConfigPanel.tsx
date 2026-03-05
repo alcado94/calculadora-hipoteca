@@ -13,6 +13,12 @@ import type {
 
 type ConfigTab = "property" | "financial" | "taxes";
 
+interface ConfigSection {
+  id: ConfigTab;
+  label: string;
+  render: (flatOnMobile?: boolean) => React.ReactNode;
+}
+
 interface MortgageConfigPanelProps {
   state: MortgageState;
   setters: MortgageSetters;
@@ -29,34 +35,41 @@ export function MortgageConfigPanel({
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [configTab, setConfigTab] = useState<ConfigTab>("property");
 
-  const sections: { id: ConfigTab; label: string; content: React.ReactNode }[] = [
+  const sections: ConfigSection[] = [
     {
       id: "property",
       label: "Datos del inmueble",
-      content: (
-        <PropertyForm state={state} setters={setters} handleNumberChange={handleNumberChange} />
+      render: (flatOnMobile = false) => (
+        <PropertyForm
+          state={state}
+          setters={setters}
+          handleNumberChange={handleNumberChange}
+          flatOnMobile={flatOnMobile}
+        />
       ),
     },
     {
       id: "financial",
       label: "Perfil financiero",
-      content: (
+      render: (flatOnMobile = false) => (
         <FinancialProfileForm
           state={state}
           setters={setters}
           handleNumberChange={handleNumberChange}
+          flatOnMobile={flatOnMobile}
         />
       ),
     },
     {
       id: "taxes",
       label: "Impuestos y gastos",
-      content: (
+      render: (flatOnMobile = false) => (
         <TaxesForm
           state={state}
           setters={setters}
           handleNumberChange={handleNumberChange}
           derived={derived}
+          flatOnMobile={flatOnMobile}
         />
       ),
     },
@@ -68,7 +81,7 @@ export function MortgageConfigPanel({
     <div className="lg:col-span-4 xl:col-span-3">
       <div className="hidden lg:block space-y-6">
         {sections.map((section) => (
-          <React.Fragment key={section.id}>{section.content}</React.Fragment>
+          <React.Fragment key={section.id}>{section.render()}</React.Fragment>
         ))}
       </div>
 
@@ -110,33 +123,7 @@ export function MortgageConfigPanel({
               ))}
             </div>
 
-            <div className="p-3">
-              {activeSection?.id === "property" && (
-                <PropertyForm
-                  state={state}
-                  setters={setters}
-                  handleNumberChange={handleNumberChange}
-                  flatOnMobile
-                />
-              )}
-              {activeSection?.id === "financial" && (
-                <FinancialProfileForm
-                  state={state}
-                  setters={setters}
-                  handleNumberChange={handleNumberChange}
-                  flatOnMobile
-                />
-              )}
-              {activeSection?.id === "taxes" && (
-                <TaxesForm
-                  state={state}
-                  setters={setters}
-                  handleNumberChange={handleNumberChange}
-                  derived={derived}
-                  flatOnMobile
-                />
-              )}
-            </div>
+            <div className="p-3">{activeSection?.render(true)}</div>
           </div>
         )}
       </div>
