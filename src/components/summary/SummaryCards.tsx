@@ -1,7 +1,7 @@
 import React from "react";
-import { MortgageQuotaCard } from "./summary/MortgageQuotaCard";
-import { RequiredSavingsCard } from "./summary/RequiredSavingsCard";
-import { MortgageAmountCard } from "./summary/MortgageAmountCard";
+import { MortgageQuotaCard } from "./MortgageQuotaCard";
+import { RequiredSavingsCard } from "./RequiredSavingsCard";
+import { MortgageAmountCard } from "./MortgageAmountCard";
 
 interface SummaryCardsProps {
   monthlyMortgage: number;

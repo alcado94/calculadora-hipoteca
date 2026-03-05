@@ -1,6 +1,6 @@
 import React from "react";
-import { Card } from "./ui";
-import { formatCurrency } from "../utils";
+import { Card } from "../ui/ui";
+import { formatCurrency } from "../../utils";
 import { Info, TrendingUp, AlertCircle } from "lucide-react";
 
 interface RentVsBuyAnalysisProps {

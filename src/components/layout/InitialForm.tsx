@@ -1,9 +1,9 @@
 import React from "react";
 import { Calculator } from "lucide-react";
-import { Input, Select } from "./ui";
+import { Input, Select } from "../ui/ui";
 import { Footer } from "./Footer";
-import type { MortgageState, MortgageSetters, HandleNumberChange } from "../types/mortgage";
-import { MORTGAGE_TYPE_OPTIONS } from "../constants/ui";
+import type { MortgageState, MortgageSetters, HandleNumberChange } from "../../types/mortgage";
+import { MORTGAGE_TYPE_OPTIONS } from "../../constants/ui";
 
 interface InitialFormProps {
   state: Pick<

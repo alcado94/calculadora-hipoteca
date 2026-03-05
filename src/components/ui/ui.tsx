@@ -1,12 +1,12 @@
 import React from "react";
-import { cn } from "../utils";
+import { cn } from "../../utils";
 import type {
   InputProps,
   SelectProps,
   ListInputProps,
   ListSelectProps,
   CardProps,
-} from "../types/ui";
+} from "../../types/ui";
 
 export function Input({
   label,

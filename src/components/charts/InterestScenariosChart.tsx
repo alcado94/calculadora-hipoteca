@@ -9,9 +9,9 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import { Card } from "../ui";
+import { Card } from "../ui/ui";
 import { formatCurrency } from "../../utils";
-import { useThemeContext } from "../ThemeProvider";
+import { useThemeContext } from "../ui/ThemeProvider";
 import type { ScenarioEntry } from "../../types/charts";
 
 export function InterestScenariosChart({

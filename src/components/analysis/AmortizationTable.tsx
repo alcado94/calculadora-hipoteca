@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Card } from "./ui";
-import { formatCurrency } from "../utils";
+import { Card } from "../ui/ui";
+import { formatCurrency } from "../../utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { AmortizationRow } from "../types/charts";
-import { AMORTIZATION_TABLE_PAGE_SIZE } from "../constants/ui";
+import type { AmortizationRow } from "../../types/charts";
+import { AMORTIZATION_TABLE_PAGE_SIZE } from "../../constants/ui";
 
 interface AmortizationTableProps {
   data: AmortizationRow[];

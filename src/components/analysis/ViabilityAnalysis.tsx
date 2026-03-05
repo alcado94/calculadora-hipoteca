@@ -1,8 +1,8 @@
 import React from "react";
 import { Target, TrendingUp, AlertTriangle, Info } from "lucide-react";
-import { Card } from "./ui";
-import { formatCurrency } from "../utils";
-import { MAX_EFFORT_RATIO } from "../constants/mortgage";
+import { Card } from "../ui/ui";
+import { formatCurrency } from "../../utils";
+import { MAX_EFFORT_RATIO } from "../../constants/mortgage";
 
 interface ViabilityAnalysisProps {
   monthlyIncome: number;

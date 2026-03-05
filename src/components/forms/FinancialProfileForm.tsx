@@ -1,6 +1,6 @@
 import React from "react";
 import { Wallet } from "lucide-react";
-import { Card, ListInput } from "../ui";
+import { Card, ListInput } from "../ui/ui";
 import type { MortgageState, MortgageSetters, HandleNumberChange } from "../../types/mortgage";
 
 interface FinancialProfileFormProps {

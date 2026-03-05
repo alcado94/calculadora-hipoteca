@@ -1,6 +1,6 @@
 import React from "react";
 import { Moon, Sun } from "lucide-react";
-import { useThemeContext } from "./ThemeProvider";
+import { useThemeContext } from "../ui/ThemeProvider";
 
 export function Footer() {
   const { theme, toggleTheme } = useThemeContext();

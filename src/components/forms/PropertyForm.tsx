@@ -1,6 +1,6 @@
 import React from "react";
 import { Home } from "lucide-react";
-import { Card, ListInput, ListSelect } from "../ui";
+import { Card, ListInput, ListSelect } from "../ui/ui";
 import type { MortgageState, MortgageSetters, HandleNumberChange } from "../../types/mortgage";
 import { MORTGAGE_TYPE_OPTIONS } from "../../constants/ui";
 

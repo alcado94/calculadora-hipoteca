@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import { Calculator, Pencil, ChevronDown, ChevronUp, Settings } from "lucide-react";
-import { cn } from "../utils";
-import { LazyAmortizationChart as AmortizationChart } from "./charts";
-import { SummaryCards } from "./SummaryCards";
-import { AmortizationTable } from "./AmortizationTable";
-import { ViabilityAnalysis } from "./ViabilityAnalysis";
-import { RentVsBuyAnalysis } from "./RentVsBuyAnalysis";
-import { useMortgageCalculator } from "../hooks/useMortgageCalculator";
-import { PropertyForm } from "./forms/PropertyForm";
-import { FinancialProfileForm } from "./forms/FinancialProfileForm";
-import { TaxesForm } from "./forms/TaxesForm";
-import { InitialForm } from "./InitialForm";
-import { ThemeProvider } from "./ThemeProvider";
-import { Footer } from "./Footer";
-import { URL_PARAM_KEYS, MORTGAGE_TYPES, PROPERTY_TYPES } from "../constants/url";
+import { cn } from "./utils";
+import { LazyAmortizationChart as AmortizationChart } from "./components/charts";
+import { SummaryCards } from "./components/summary";
+import { AmortizationTable } from "./components/analysis/AmortizationTable";
+import { ViabilityAnalysis } from "./components/analysis/ViabilityAnalysis";
+import { RentVsBuyAnalysis } from "./components/analysis/RentVsBuyAnalysis";
+import { useMortgageCalculator } from "./hooks/useMortgageCalculator";
+import { PropertyForm } from "./components/forms/PropertyForm";
+import { FinancialProfileForm } from "./components/forms/FinancialProfileForm";
+import { TaxesForm } from "./components/forms/TaxesForm";
+import { InitialForm } from "./components/layout/InitialForm";
+import { ThemeProvider } from "./components/ui/ThemeProvider";
+import { Footer } from "./components/layout/Footer";
+import { URL_PARAM_KEYS, MORTGAGE_TYPES, PROPERTY_TYPES } from "./constants/url";
 
 // SSR-safe browser helpers
 const isBrowser = typeof window !== "undefined";

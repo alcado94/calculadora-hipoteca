@@ -1,8 +1,8 @@
 import React from "react";
 import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-import { Card } from "../ui";
+import { Card } from "../ui/ui";
 import { formatCurrency } from "../../utils";
-import { useThemeContext } from "../ThemeProvider";
+import { useThemeContext } from "../ui/ThemeProvider";
 import type { PieChartEntry } from "../../types/charts";
 
 export function CostBreakdownChart({

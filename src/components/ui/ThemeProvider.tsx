@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from "react";
-import { useTheme } from "../hooks/useTheme";
-import type { ThemeContextValue } from "../types/theme";
+import { useTheme } from "../../hooks/useTheme";
+import type { ThemeContextValue } from "../../types/theme";
 
-export type { Theme } from "../types/theme";
+export type { Theme } from "../../types/theme";
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
