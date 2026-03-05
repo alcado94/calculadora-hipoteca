@@ -1,6 +1,5 @@
 /** Mapeo de claves de estado a parámetros cortos de URL para compartir simulaciones */
 export const URL_PARAM_KEYS = {
-  budgetName: "bn",
   propertyValue: "pv",
   ltv: "ltv",
   savings: "sv",

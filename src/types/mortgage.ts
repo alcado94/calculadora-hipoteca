@@ -5,7 +5,6 @@ export type PropertyType = "second-hand" | "new";
 
 /** Shape del estado de los inputs del formulario */
 export interface MortgageState {
-  budgetName: string;
   propertyValue: string | number;
   ltv: string | number;
   savings: string | number;
@@ -25,7 +24,6 @@ export interface MortgageState {
 
 /** Dispatchers para actualizar cada campo del estado */
 export interface MortgageSetters {
-  setBudgetName: React.Dispatch<React.SetStateAction<string>>;
   setPropertyValue: React.Dispatch<React.SetStateAction<string | number>>;
   setLtv: React.Dispatch<React.SetStateAction<string | number>>;
   setSavings: React.Dispatch<React.SetStateAction<string | number>>;

@@ -17,7 +17,6 @@ export { MORTGAGE_DEFAULTS } from "../constants/mortgage";
 
 export function useMortgageCalculator() {
   // Main Inputs
-  const [budgetName, setBudgetName] = useState<string>(MORTGAGE_DEFAULTS.budgetName);
   const [propertyValue, setPropertyValue] = useState<string | number>(
     MORTGAGE_DEFAULTS.propertyValue
   );
@@ -174,7 +173,6 @@ export function useMortgageCalculator() {
 
   return {
     state: {
-      budgetName,
       propertyValue,
       ltv,
       savings,
@@ -192,7 +190,6 @@ export function useMortgageCalculator() {
       ibiAndCommunity,
     },
     setters: {
-      setBudgetName,
       setPropertyValue,
       setLtv,
       setSavings,

@@ -1,6 +1,5 @@
 /** Valores por defecto del formulario de la calculadora hipotecaria */
 export const MORTGAGE_DEFAULTS = {
-  budgetName: "Mi Presupuesto",
   propertyValue: "230000",
   ltv: "80",
   savings: "",

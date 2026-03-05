@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
-import { Calculator, Pencil } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { cn } from "./utils";
 import { LazyAmortizationChart as AmortizationChart } from "./components/charts";
 import { MortgageQuotaCard } from "./components/summary/MortgageQuotaCard";
@@ -50,7 +50,6 @@ export default function App() {
   const updateUrlFromState = () => {
     const params = new URLSearchParams();
 
-    params.set(URL_PARAM_KEYS.budgetName, String(state.budgetName ?? ""));
     params.set(URL_PARAM_KEYS.propertyValue, String(state.propertyValue ?? ""));
     params.set(URL_PARAM_KEYS.ltv, String(state.ltv ?? ""));
     params.set(URL_PARAM_KEYS.savings, String(state.savings ?? ""));
@@ -99,10 +98,6 @@ export default function App() {
         setter(value);
       }
     };
-
-    if (params.has(URL_PARAM_KEYS.budgetName)) {
-      setters.setBudgetName(params.get(URL_PARAM_KEYS.budgetName) ?? "");
-    }
 
     setValidNumberParam("propertyValue", setters.setPropertyValue);
     setValidNumberParam("ltv", setters.setLtv);
@@ -163,7 +158,6 @@ export default function App() {
     updateUrlFromState();
   }, [
     viewMode,
-    state.budgetName,
     state.propertyValue,
     state.ltv,
     state.savings,
@@ -204,7 +198,7 @@ export default function App() {
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-50 flex flex-col">
           {/* Header */}
           <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
-            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
               <button
                 onClick={goHome}
                 className="flex items-center gap-3 group cursor-pointer"
@@ -217,17 +211,6 @@ export default function App() {
                   Simulador de hipoteca
                 </h1>
               </button>
-
-              <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-none border border-slate-200 dark:border-slate-600 focus-within:border-indigo-500 dark:focus-within:border-indigo-400 focus-within:ring-1 focus-within:ring-indigo-500 dark:focus-within:ring-indigo-400 transition-all">
-                <Pencil className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                <input
-                  type="text"
-                  value={state.budgetName}
-                  onChange={(e) => setters.setBudgetName(e.target.value)}
-                  placeholder="Nombre del presupuesto..."
-                  className="bg-transparent border-none outline-none text-sm font-medium text-slate-700 dark:text-slate-200 w-48 sm:w-64 placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                />
-              </div>
             </div>
           </header>
 
