@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
-import { Calculator, Pencil, ChevronDown, ChevronUp, Settings } from "lucide-react";
+import { Calculator, Pencil } from "lucide-react";
 import { cn } from "./utils";
 import { LazyAmortizationChart as AmortizationChart } from "./components/charts";
 import { SummaryCards } from "./components/summary";
@@ -7,12 +7,10 @@ import { AmortizationTable } from "./components/analysis/AmortizationTable";
 import { ViabilityAnalysis } from "./components/analysis/ViabilityAnalysis";
 import { RentVsBuyAnalysis } from "./components/analysis/RentVsBuyAnalysis";
 import { useMortgageCalculator } from "./hooks/useMortgageCalculator";
-import { PropertyForm } from "./components/forms/PropertyForm";
-import { FinancialProfileForm } from "./components/forms/FinancialProfileForm";
-import { TaxesForm } from "./components/forms/TaxesForm";
 import { InitialForm } from "./components/layout/InitialForm";
 import { ThemeProvider } from "./components/ui/ThemeProvider";
 import { Footer } from "./components/layout/Footer";
+import { MortgageConfigPanel } from "./components/layout/MortgageConfigPanel";
 import { URL_PARAM_KEYS, MORTGAGE_TYPES, PROPERTY_TYPES } from "./constants/url";
 
 // SSR-safe browser helpers
@@ -44,8 +42,6 @@ export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
   const [activeTab, setActiveTab] = useState<"table" | "viability" | "rent-vs-buy">("table");
   const [viewMode, setViewMode] = useState<"form" | "results">("form");
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
-  const [configTab, setConfigTab] = useState<"property" | "financial" | "taxes">("property");
   const isHydratingFromUrl = useRef(false);
   const hasMounted = useRef(false);
 
@@ -234,107 +230,16 @@ export default function App() {
           </header>
 
           <main className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              {/* Left Column: Inputs — solo visible en desktop */}
-              <div className="hidden lg:block lg:col-span-4 xl:col-span-3 space-y-6">
-                <PropertyForm
-                  state={state}
-                  setters={setters}
-                  handleNumberChange={handleNumberChange}
-                />
-                <FinancialProfileForm
-                  state={state}
-                  setters={setters}
-                  handleNumberChange={handleNumberChange}
-                />
-                <TaxesForm
-                  state={state}
-                  setters={setters}
-                  handleNumberChange={handleNumberChange}
-                  derived={derived}
-                />
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+              <MortgageConfigPanel
+                state={state}
+                setters={setters}
+                handleNumberChange={handleNumberChange}
+                derived={derived}
+              />
 
               {/* Right Column: Results & Charts */}
               <div className="lg:col-span-8 xl:col-span-9 space-y-6">
-                {/* Panel desplegable de configuración — solo visible en móvil */}
-                <div className="lg:hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
-                  <button
-                    onClick={() => setIsConfigOpen(!isConfigOpen)}
-                    className="w-full flex items-center justify-between px-4 py-3.5 text-left"
-                    aria-expanded={isConfigOpen}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Settings className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                      <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                        Datos de la hipoteca
-                      </span>
-                    </div>
-                    {isConfigOpen ? (
-                      <ChevronUp className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                    )}
-                  </button>
-
-                  {isConfigOpen && (
-                    <div className="border-t border-slate-200 dark:border-slate-700">
-                      {/* Tabs */}
-                      <div className="flex border-b border-slate-200 dark:border-slate-700">
-                        {(
-                          [
-                            { id: "property", label: "Datos del inmueble" },
-                            { id: "financial", label: "Perfil financiero" },
-                            { id: "taxes", label: "Impuestos y gastos" },
-                          ] as const
-                        ).map((tab) => (
-                          <button
-                            key={tab.id}
-                            onClick={() => setConfigTab(tab.id)}
-                            className={cn(
-                              "flex-1 px-2 py-2.5 text-xs leading-tight text-center whitespace-normal font-medium transition-colors border-b-2",
-                              configTab === tab.id
-                                ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
-                                : "border-transparent text-slate-500 dark:text-slate-400"
-                            )}
-                          >
-                            {tab.label}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Contenido del tab activo */}
-                      <div className="p-3">
-                        {configTab === "property" && (
-                          <PropertyForm
-                            state={state}
-                            setters={setters}
-                            handleNumberChange={handleNumberChange}
-                            flatOnMobile
-                          />
-                        )}
-                        {configTab === "financial" && (
-                          <FinancialProfileForm
-                            state={state}
-                            setters={setters}
-                            handleNumberChange={handleNumberChange}
-                            flatOnMobile
-                          />
-                        )}
-                        {configTab === "taxes" && (
-                          <TaxesForm
-                            state={state}
-                            setters={setters}
-                            handleNumberChange={handleNumberChange}
-                            derived={derived}
-                            flatOnMobile
-                          />
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
                 <SummaryCards
                   monthlyMortgage={derived.monthlyPayment}
                   monthlyIbiAndCommunity={derived.monthlyIbiAndCommunity}
