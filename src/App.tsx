@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef, Suspense } from "react";
 import { Calculator, Pencil } from "lucide-react";
 import { cn } from "./utils";
 import { LazyAmortizationChart as AmortizationChart } from "./components/charts";
-import { SummaryCards } from "./components/summary";
+import { MortgageQuotaCard } from "./components/summary/MortgageQuotaCard";
+import { RequiredSavingsCard } from "./components/summary/RequiredSavingsCard";
+import { MortgageAmountCard } from "./components/summary/MortgageAmountCard";
 import { AmortizationTable } from "./components/analysis/AmortizationTable";
 import { ViabilityAnalysis } from "./components/analysis/ViabilityAnalysis";
 import { RentVsBuyAnalysis } from "./components/analysis/RentVsBuyAnalysis";
@@ -240,28 +242,41 @@ export default function App() {
 
               {/* Right Column: Results & Charts */}
               <div className="lg:col-span-8 xl:col-span-9 space-y-6">
-                <SummaryCards
-                  monthlyMortgage={derived.monthlyPayment}
-                  monthlyIbiAndCommunity={derived.monthlyIbiAndCommunity}
-                  years={derived.numYears}
-                  totalInitialCash={derived.totalInitialCash}
-                  totalExpenses={derived.totalExpenses}
-                  loanAmount={derived.loanAmount}
-                  downPayment={derived.downPayment}
-                  affordabilityRatio={derived.affordabilityRatio}
-                  savings={derived.numSavings}
-                  monthlySavings={derived.numMonthlySavings}
-                  missingSavings={derived.missingSavings}
-                  monthsToSave={derived.monthsToSave}
-                  yearsToSave={derived.yearsToSave}
-                  isSavingsRealistic={derived.isSavingsRealistic}
-                  freeIncome={derived.freeIncome}
-                  equivalentRent={derived.numEquivalentRent}
-                  totalInterestPaid={derived.totalInterestPaid}
-                  totalCostOfProperty={derived.totalCostOfProperty}
-                  ltv={derived.numLtv}
-                  monthlyIncome={derived.numMonthlyIncome}
-                />
+                <div className="grid grid-cols-1 auto-rows-fr md:grid-cols-3 gap-4 [&>*]:h-full">
+                  <MortgageQuotaCard
+                    monthlyMortgage={derived.monthlyPayment}
+                    monthlyIbiAndCommunity={derived.monthlyIbiAndCommunity}
+                    years={derived.numYears}
+                    affordabilityRatio={derived.affordabilityRatio}
+                    monthlyIncome={derived.numMonthlyIncome}
+                  />
+
+                  <RequiredSavingsCard
+                    totalInitialCash={derived.totalInitialCash}
+                    downPayment={derived.downPayment}
+                    totalExpenses={derived.totalExpenses}
+                    missingSavings={derived.missingSavings}
+                    savings={derived.numSavings}
+                    monthlySavings={derived.numMonthlySavings}
+                    monthsToSave={derived.monthsToSave}
+                    yearsToSave={derived.yearsToSave}
+                    isSavingsRealistic={derived.isSavingsRealistic}
+                    freeIncome={derived.freeIncome}
+                    equivalentRent={derived.numEquivalentRent}
+                    monthlyIncome={derived.numMonthlyIncome}
+                  />
+
+                  <MortgageAmountCard
+                    loanAmount={derived.loanAmount}
+                    ltv={derived.numLtv}
+                    totalInterestPaid={derived.totalInterestPaid}
+                    totalCostOfProperty={derived.totalCostOfProperty}
+                    downPayment={derived.downPayment}
+                    totalExpenses={derived.totalExpenses}
+                    monthlyIbiAndCommunity={derived.monthlyIbiAndCommunity}
+                    years={derived.numYears}
+                  />
+                </div>
 
                 {/* Tabs Navigation */}
                 <div className="border-b border-slate-200 dark:border-slate-700 mb-6">
