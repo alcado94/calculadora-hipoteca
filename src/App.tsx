@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import { Calculator } from "lucide-react";
-import { cn } from "./utils";
 import { LazyAmortizationChart as AmortizationChart } from "./components/charts";
 import { MortgageQuotaCard } from "./components/summary/MortgageQuotaCard";
 import { RequiredSavingsCard } from "./components/summary/RequiredSavingsCard";
@@ -11,6 +10,7 @@ import { RentVsBuyAnalysis } from "./components/analysis/RentVsBuyAnalysis";
 import { useMortgageCalculator } from "./hooks/useMortgageCalculator";
 import { InitialForm } from "./components/layout/InitialForm";
 import { ThemeProvider } from "./components/ui/ThemeProvider";
+import { Tabs } from "./components/ui";
 import { Footer } from "./components/layout/Footer";
 import { MortgageConfigPanel } from "./components/layout/MortgageConfigPanel";
 import { URL_PARAM_KEYS, MORTGAGE_TYPES, PROPERTY_TYPES } from "./constants/url";
@@ -42,7 +42,6 @@ function hasKnownShareParams(params: URLSearchParams) {
 
 export default function App() {
   const { state, setters, handleNumberChange, derived, charts } = useMortgageCalculator();
-  const [activeTab, setActiveTab] = useState<"table" | "viability" | "rent-vs-buy">("table");
   const [viewMode, setViewMode] = useState<"form" | "results">("form");
   const isHydratingFromUrl = useRef(false);
   const hasMounted = useRef(false);
@@ -261,91 +260,49 @@ export default function App() {
                   />
                 </div>
 
-                {/* Tabs Navigation */}
-                <div className="border-b border-slate-200 dark:border-slate-700 mb-6">
-                  <nav className="-mb-px flex space-x-8 overflow-x-auto" aria-label="Tabs">
-                    <button
-                      onClick={() => setActiveTab("table")}
-                      className={cn(
-                        "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
-                        activeTab === "table"
-                          ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
-                          : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600"
-                      )}
-                    >
-                      Detalle de Amortización
-                    </button>
-                    <button
-                      onClick={() => setActiveTab("viability")}
-                      className={cn(
-                        "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
-                        activeTab === "viability"
-                          ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
-                          : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600"
-                      )}
-                    >
-                      Análisis de Viabilidad
-                    </button>
-                    <button
-                      onClick={() => setActiveTab("rent-vs-buy")}
-                      className={cn(
-                        "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors",
-                        activeTab === "rent-vs-buy"
-                          ? "border-indigo-500 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400"
-                          : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600"
-                      )}
-                    >
-                      Comprar vs Alquilar
-                    </button>
-                  </nav>
-                </div>
+                <Tabs defaultValue="table">
+                  <Tabs.List className="border-b border-slate-200 dark:border-slate-700 mb-6">
+                    <Tabs.Trigger value="table">Detalle de Amortización</Tabs.Trigger>
+                    <Tabs.Trigger value="viability">Análisis de Viabilidad</Tabs.Trigger>
+                    <Tabs.Trigger value="rent-vs-buy">Comprar vs Alquilar</Tabs.Trigger>
+                  </Tabs.List>
 
-                {/* Tab Content */}
-                <div className="animate-in fade-in duration-300">
-                  {(() => {
-                    switch (activeTab) {
-                      case "table":
-                        return (
-                          <div className="grid grid-cols-1 gap-6">
-                            <Suspense
-                              fallback={
-                                <div className="h-[300px] bg-slate-100 dark:bg-slate-800 animate-pulse rounded" />
-                              }
-                            >
-                              <AmortizationChart data={charts.amortizationData} />
-                            </Suspense>
-                            <AmortizationTable data={charts.amortizationData} />
-                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed px-1">
-                              Los resultados de amortización son orientativos y pueden variar según
-                              la evaluación y condiciones finales de cada entidad financiera. Esta
-                              herramienta ofrece una estimación del coste en función de los datos
-                              introducidos, sin constituir una oferta vinculante ni una aprobación
-                              del préstamo.
-                            </p>
-                          </div>
-                        );
-                      case "viability":
-                        return (
-                          <ViabilityAnalysis
-                            monthlyIncome={derived.numMonthlyIncome}
-                            maxLoanAmount={derived.maxLoanAmount}
-                            currentLoanAmount={derived.loanAmount}
-                            savings={derived.numSavings}
-                          />
-                        );
-                      case "rent-vs-buy":
-                        return (
-                          <RentVsBuyAnalysis
-                            propertyValue={derived.numPropertyValue}
-                            monthlyRent={state.equivalentRent}
-                          />
-                        );
+                  <Tabs.Content value="table">
+                    <div className="grid grid-cols-1 gap-6">
+                      <Suspense
+                        fallback={
+                          <div className="h-[300px] bg-slate-100 dark:bg-slate-800 animate-pulse rounded" />
+                        }
+                      >
+                        <AmortizationChart data={charts.amortizationData} />
+                      </Suspense>
+                      <AmortizationTable data={charts.amortizationData} />
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed px-1">
+                        Los resultados de amortización son orientativos y pueden variar según la
+                        evaluación y condiciones finales de cada entidad financiera. Esta
+                        herramienta ofrece una estimación del coste en función de los datos
+                        introducidos, sin constituir una oferta vinculante ni una aprobación del
+                        préstamo.
+                      </p>
+                    </div>
+                  </Tabs.Content>
 
-                      default:
-                        return null;
-                    }
-                  })()}
-                </div>
+                  <Tabs.Content value="viability">
+                    <ViabilityAnalysis
+                      monthlyIncome={derived.numMonthlyIncome}
+                      maxLoanAmount={derived.maxLoanAmount}
+                      currentLoanAmount={derived.loanAmount}
+                      savings={derived.numSavings}
+                    />
+                  </Tabs.Content>
+
+                  <Tabs.Content value="rent-vs-buy">
+                    <RentVsBuyAnalysis
+                      propertyValue={derived.numPropertyValue}
+                      monthlyRent={state.equivalentRent}
+                    />
+                  </Tabs.Content>
+                </Tabs>
               </div>
             </div>
           </main>
