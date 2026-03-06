@@ -3,6 +3,8 @@ export * from "./AmortizationChart";
 export * from "./StressTestChart";
 export * from "./InterestScenariosChart";
 export * from "./CostBreakdownChart";
+export * from "./ScenariosComparisonChart";
+export * from "./ScenariosComparisonMatrix";
 
 // Lazy-loaded versions for code splitting (reduces initial bundle ~60KB)
 import { lazy } from "react";

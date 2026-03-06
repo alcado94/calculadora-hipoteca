@@ -7,6 +7,7 @@ import { MortgageAmountCard } from "./components/summary/MortgageAmountCard";
 import { AmortizationTable } from "./components/analysis/AmortizationTable";
 import { ViabilityAnalysis } from "./components/analysis/ViabilityAnalysis";
 import { RentVsBuyAnalysis } from "./components/analysis/RentVsBuyAnalysis";
+import { ScenariosEvaluation } from "./components/analysis/ScenariosEvaluation";
 import { useMortgageCalculator } from "./hooks/useMortgageCalculator";
 import { InitialForm } from "./components/layout/InitialForm";
 import { ThemeProvider } from "./components/ui/ThemeProvider";
@@ -275,6 +276,7 @@ export default function App() {
                     <Tabs.Trigger value="table">Detalle de Amortización</Tabs.Trigger>
                     <Tabs.Trigger value="viability">Análisis de Viabilidad</Tabs.Trigger>
                     <Tabs.Trigger value="rent-vs-buy">Comprar vs Alquilar</Tabs.Trigger>
+                    <Tabs.Trigger value="scenarios">Evaluación de escenarios</Tabs.Trigger>
                   </Tabs.List>
 
                   <Tabs.Content value="table">
@@ -310,6 +312,18 @@ export default function App() {
                     <RentVsBuyAnalysis
                       propertyValue={derived.numPropertyValue}
                       monthlyRent={state.equivalentRent}
+                    />
+                  </Tabs.Content>
+
+                  <Tabs.Content value="scenarios">
+                    <ScenariosEvaluation
+                      propertyValue={derived.numPropertyValue}
+                      years={derived.numYears}
+                      inflationRate={derived.numInflationRate}
+                      totalExpenses={derived.totalExpenses}
+                      annualIbiAndCommunity={derived.numIbiAndCommunity}
+                      baselineInterestRate={derived.numInterestRate}
+                      baselineLtv={derived.numLtv}
                     />
                   </Tabs.Content>
                 </Tabs>
