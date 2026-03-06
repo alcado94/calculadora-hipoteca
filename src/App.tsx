@@ -13,6 +13,7 @@ import { ThemeProvider } from "./components/ui/ThemeProvider";
 import { Tabs } from "./components/ui";
 import { Footer } from "./components/layout/Footer";
 import { MortgageConfigPanel } from "./components/layout/MortgageConfigPanel";
+import { ExportButton } from "./components/layout/ExportButton";
 import { URL_PARAM_KEYS, MORTGAGE_TYPES, PROPERTY_TYPES } from "./constants/url";
 
 // SSR-safe browser helpers
@@ -257,6 +258,15 @@ export default function App() {
                     totalExpenses={derived.totalExpenses}
                     monthlyIbiAndCommunity={derived.monthlyIbiAndCommunity}
                     years={derived.numYears}
+                  />
+                </div>
+
+                {/* Boton de exportacion a Excel */}
+                <div className="flex justify-end">
+                  <ExportButton
+                    state={state}
+                    derived={derived}
+                    amortizationData={charts.amortizationData}
                   />
                 </div>
 
