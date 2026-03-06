@@ -262,7 +262,7 @@ export default function App() {
                 </div>
 
                 {/* Boton de exportacion a Excel */}
-                <div className="flex justify-end">
+                <div className="flex justify-end mb-0">
                   <ExportButton
                     state={state}
                     derived={derived}

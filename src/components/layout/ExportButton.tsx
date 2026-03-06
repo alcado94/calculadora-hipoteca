@@ -10,11 +10,13 @@ interface ExportButtonProps {
 }
 
 export function ExportButton({ state, derived, amortizationData }: ExportButtonProps) {
+  const MIN_EXPORT_FEEDBACK_MS = 900;
   const [isExporting, setIsExporting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [hasError, setHasError] = useState(false);
 
   const handleExport = async () => {
+    const startedAt = Date.now();
     setIsExporting(true);
     setProgress(0);
     setHasError(false);
@@ -34,13 +36,20 @@ export function ExportButton({ state, derived, amortizationData }: ExportButtonP
       // Nombre del fichero descriptivo: hipoteca_230000_80%_30a.xlsx
       const filename = `hipoteca_${Math.round(derived.numPropertyValue)}_${derived.numLtv}pct_${derived.numYears}a.xlsx`;
       saveAs(blob, filename);
+      setProgress(100);
     } catch (error) {
       console.error("Error al generar el fichero Excel:", error);
       setHasError(true);
     } finally {
+      const elapsedMs = Date.now() - startedAt;
+      const pendingMs = Math.max(0, MIN_EXPORT_FEEDBACK_MS - elapsedMs);
+
+      if (pendingMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, pendingMs));
+      }
+
       setIsExporting(false);
-      // Mantener el progress a 100 brevemente antes de resetear
-      setTimeout(() => setProgress(0), 600);
+      setProgress(0);
     }
   };
 
@@ -50,7 +59,7 @@ export function ExportButton({ state, derived, amortizationData }: ExportButtonP
         onClick={handleExport}
         disabled={isExporting}
         className={[
-          "relative overflow-hidden flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors duration-200",
+          "relative overflow-hidden flex items-center justify-center w-[152px] gap-1 px-2.5 py-1 text-[11px] font-medium transition-colors duration-200",
           "rounded-none border",
           isExporting
             ? "bg-slate-700 border-slate-700 text-white cursor-not-allowed"
@@ -74,14 +83,19 @@ export function ExportButton({ state, derived, amortizationData }: ExportButtonP
           />
         )}
 
-        <span className="relative z-10 flex items-center gap-1.5">
+        <span className="relative z-10 flex items-center justify-center gap-1.5 w-full">
           {isExporting ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin shrink-0" />
+            <Loader2 className="w-3 h-3 animate-spin shrink-0" />
           ) : (
-            <FileSpreadsheet className="w-3.5 h-3.5 shrink-0" />
+            <FileSpreadsheet className="w-3 h-3 shrink-0" />
           )}
-          <span>{isExporting ? "Descargando..." : "Descargar Excel"}</span>
-          {!isExporting && <Download className="w-3 h-3 shrink-0 opacity-70" />}
+          <span>Descargar Excel</span>
+          <Download
+            className={[
+              "w-2.5 h-2.5 shrink-0 opacity-70 transition-opacity duration-150",
+              isExporting ? "opacity-0" : "opacity-70",
+            ].join(" ")}
+          />
         </span>
       </button>
 
